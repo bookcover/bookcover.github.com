@@ -1,0 +1,35 @@
+@font-face{
+    font-family:nbg;
+    src:url(../fonts/NanumBarunGothic.woff) format('woff');
+}
+@font-face{
+    font-family:ujd;
+    src:url(../fonts/UnJamoDotum.woff) format('woff');
+}
+@font-face {
+    font-family:mj;
+    src:url(../fonts/UnBatang.woff) format('woff');
+}
+
+@font-face{
+ font-family:'SungDongGothic';
+ font-style:normal;
+ src:url('../fonts/sungdong.woff') format('woff');
+}
+
+@font-face{
+ font-family:'SungDongGothicB';
+ font-style:normal;
+ font-weight:600;
+ src:url('../fonts/sungdong.woff') format('woff');
+}
+
+body{font-family:'나눔바른고딕', 'NanumBarunGothic', nbg}
+h1{font-family:'나눔바른고딕', 'NanumBarunGothic', nbg}
+#canvas {
+    border : 1px solid;
+    padding : 0px;
+}
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */

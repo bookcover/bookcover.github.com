@@ -1,0 +1,19 @@
+{
+  "books": [
+    {
+      "title": "될 수 있어 SE",
+      "author": "나츠미 코지",
+      "translator": ""
+    },
+    {
+      "title": "제로의 사역마",
+      "author": "야마구치 노보루",
+      "translator": "윤영의"
+    },
+    {
+      "title": "나와 호랑이님",
+      "author": "카넬",
+      "translator": ""
+    }
+  ]
+}
