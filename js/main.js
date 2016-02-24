@@ -416,3 +416,28 @@ $("#colorPicker").spectrum({
     ["#000000", "#940008", "#840008", "#ad2929", "#637321", "#296b00", "#29006b", "#21007b", "#52007b", "#84007b"]
     ]
 });
+
+
+function GetCanvasAtResoution(newWidth)
+{
+    if (canvas.width != newWidth) {
+        var scaleMultiplier = newWidth / canvas.width;
+        var objects = canvas.getObjects();
+        for (var i in objects) {
+            objects[i].scaleX = objects[i].scaleX * scaleMultiplier;
+            objects[i].scaleY = objects[i].scaleY * scaleMultiplier;
+            objects[i].left = objects[i].left * scaleMultiplier;
+            objects[i].top = objects[i].top * scaleMultiplier;
+            objects[i].setCoords();
+        }
+        canvas.setWidth(canvas.getWidth() * scaleMultiplier);
+        canvas.setHeight(canvas.getHeight() * scaleMultiplier);
+        canvas.renderAll();
+        canvas.calcOffset();
+    }
+    return canvas.toDataURL();
+}
+
+$('#dLButton').bind('click', function(){
+    GetCanvasAtResoution(1000);
+});
