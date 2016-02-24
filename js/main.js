@@ -204,7 +204,7 @@ setTimeout(function() {
     {
         console.log("크롬 아님");
     }
-}, 1000);
+}, 2500);
 
 function titleSplit(value)
 {
@@ -441,4 +441,6 @@ function GetCanvasAtResoution(newWidth, canvas)
 $('#dLButton').bind('click', function(){
     data = GetCanvasAtResoution(1000, canvas);
     GetCanvasAtResoution(500, canvas);
+    $("#canvas").hide();
+    $("#icanvas").html('<img src=' + data +'">')
 });
