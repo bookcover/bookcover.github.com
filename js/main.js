@@ -441,6 +441,7 @@ function GetCanvasAtResoution(newWidth, canvas)
 $('#dLButton').bind('click', function(){
     data = GetCanvasAtResoution(1000, canvas);
     GetCanvasAtResoution(500, canvas);
+    
+    $("#icanvas").html('<img src=' + data +'">');
     $("#canvas").hide();
-    $("#icanvas").html('<img src=' + data +'">')
 });
