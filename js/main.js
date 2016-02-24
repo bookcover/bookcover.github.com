@@ -418,7 +418,7 @@ $("#colorPicker").spectrum({
 });
 
 
-function GetCanvasAtResoution(newWidth)
+function GetCanvasAtResoution(newWidth, canvas)
 {
     if (canvas.width != newWidth) {
         var scaleMultiplier = newWidth / canvas.width;
@@ -439,5 +439,5 @@ function GetCanvasAtResoution(newWidth)
 }
 
 $('#dLButton').bind('click', function(){
-    GetCanvasAtResoution(1000);
+    GetCanvasAtResoution(1000, canvas);
 });
