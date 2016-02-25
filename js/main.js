@@ -444,6 +444,6 @@ $('#dLButton').bind('click', function(){
     data = GetCanvasAtResoution(1000, canvas);
     GetCanvasAtResoution(500, canvas);
     var scaleMultiplier = $('#rightCanvas').width() / canvas.width;
-    $("#iCanvas").html('<img width=' + canvas.getWidth()*scaleMultiplier +" height=" canvas.getHeight()*scaleMultiplier + ' src="' + data +'">');
+    $("#iCanvas").html('<img width=' + canvas.getWidth()*scaleMultiplier +" height=" + canvas.getHeight()*scaleMultiplier + ' src="' + data +'">');
     //$("#canvas").hide();
 });
