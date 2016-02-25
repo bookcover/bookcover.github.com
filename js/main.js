@@ -182,6 +182,11 @@ function init() {
     //상대위치로 위치가 결정되는 요소의 위치를 조정해줌.
     alignCover();
     
+    data = GetCanvasAtResoution(1000, canvas);
+    GetCanvasAtResoution(500, canvas);
+    
+    $("#iCanvas").html('<img src="' + data +'">');
+    
 }
 
 init();
@@ -250,6 +255,10 @@ function titleSplit(value)
         labelWidth(cTitle.getBoundingRectWidth());
     }
     canvas.renderAll();
+    data = GetCanvasAtResoution(1000, canvas);
+    GetCanvasAtResoution(500, canvas);
+    
+    $("#iCanvas").html('<img src="' + data +'">');
 }
 //값이 계속 변함 수정 필요
 function drawCover(id, value){
@@ -295,6 +304,10 @@ function alignCover(){
     cTranslator.setTop(cAuthor.top+cAuthor.fontSize * 0.3);
     cTranslator.setLeft(cAuthor.left + cAuthor.getBoundingRectWidth() + 10);
     cOriginalTitle.setTop(cLabelD.top + cLabelD.height/2+2);
+    data = GetCanvasAtResoution(1000, canvas);
+    GetCanvasAtResoution(500, canvas);
+    
+    $("#iCanvas").html('<img src="' + data +'">');
 }
 
 obj = canvas.getObjects();
