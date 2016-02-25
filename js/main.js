@@ -442,6 +442,6 @@ $('#dLButton').bind('click', function(){
     data = GetCanvasAtResoution(1000, canvas);
     GetCanvasAtResoution(500, canvas);
     
-    $("#iCanvas").html('<img src="' + data.replace(';', ',') +'">');
+    $("#iCanvas").html('<img src="' + data +'">');
     //$("#canvas").hide();
 });
