@@ -7,11 +7,11 @@ $("#labelColor").hide();
 
 
 //캔버스 설정
-//var canvas = new fabric.Canvas('canvas', {
-//    //backgroundColor : 'rgb(255,255,255)',
-//});
+var canvas = new fabric.Canvas('canvas', {
+    //backgroundColor : 'rgb(255,255,255)',
+    allowTouchScrolling : true,
+});
 
-var canvas = new fabric.Canvas();
 
 sCover ="img/"+(Math.floor(Math.random() *20)+1) + ".jpg";
 sNumber = Math.floor(Math.random() *999)+1
