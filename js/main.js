@@ -439,9 +439,9 @@ function GetCanvasAtResoution(newWidth, canvas)
 }
 
 $('#dLButton').bind('click', function(){
-    //data = GetCanvasAtResoution(1000, canvas);
-    data = GetCanvasAtResoution(500, canvas);
+    data = GetCanvasAtResoution(1000, canvas);
+    GetCanvasAtResoution(500, canvas);
     
     $("#iCanvas").html('<img src="' + data.replace(';', ',') +'">');
-    $("#canvas").hide();
+    //$("#canvas").hide();
 });
