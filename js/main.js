@@ -459,7 +459,7 @@ function imgOutput()
 }
 
 var select = $("#maker").each(function(){
-    if(($(this).attr('class')) == "selected")
+    if(($(this).attr('class')) == "active")
         return $(this).attr('id');
     });
     
