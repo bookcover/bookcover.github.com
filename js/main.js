@@ -1,3 +1,4 @@
+//상단 메뉴 선택에 따라 스크립트를 선택할 수 있도록 값을 가져온다
 var select;
 $("#maker li" ).each(function(){
     if(($(this).attr('class')) == "active")
@@ -85,7 +86,15 @@ function imgOutput()
 
 document.write("<script type='text/javascript' src='js/"+ select +".js'><"+"/script>");  
 
-
+$('#maker li').bind('click', function(){
+    $('#maker li').each(function(){
+       if($(this).attr('class') == 'active')
+       {
+           $(this).attr('class', '');
+       }
+    });
+    $(this).attr('class', 'active');
+});
 
 
 
