@@ -1,16 +1,4 @@
-//초기 변수 설정
-var cCoverArt;
-var cCoverLine;
-var cSeries;
-var cTitle;
-var cLabelU;
-var cLabelD;
-var cAuthor;
-var cOriginalTitle;
-var cTranslator;
-var cPublisher;
-var cgLDTBox;
-var cCover;
+//민음사 표지 제작 스크립트
 
 //캔버스 초기 세팅을 위한 함수
 function init() {    
@@ -280,9 +268,6 @@ function alignCover(){
     cOriginalTitle.setTop(cLabelD.top + cLabelD.height/2+2);
 }
 
-obj = canvas.getObjects();
-console.log(obj);
-
 //폼에 이벤트를 걸어줌
 $("#bcForm :text").bind('keyup', 
     function() {
@@ -328,28 +313,6 @@ $(document).ready(function(){
          readURL(this);
      });
   });
-
-//canvas 리사이즈 관련 답변
-//http://stackoverflow.com/questions/30862356/fabric-js-resize-canvas-to-fit-screen
-
-//$(window).resize(function (){
-// if (canvas.width != $("#rightCanvas").width()) {
-//            var scaleMultiplier = $("#rightCanvas").width() / canvas.width;
-//            var objects = canvas.getObjects();
-//            for (var i in objects) {
-//                objects[i].scaleX = objects[i].scaleX * scaleMultiplier;
-//                objects[i].scaleY = objects[i].scaleY * scaleMultiplier;
-//                objects[i].left = objects[i].left * scaleMultiplier;
-//                objects[i].top = objects[i].top * scaleMultiplier;
-//                objects[i].setCoords();
-//            }
-//
-//            canvas.setWidth(canvas.getWidth() * scaleMultiplier);
-//            canvas.setHeight(canvas.getHeight() * scaleMultiplier);
-//            canvas.renderAll();
-//            canvas.calcOffset();
-//        }
-//});
 
 $("#colorPicker").spectrum({
     color: cLabelU.getFill(),
@@ -401,43 +364,3 @@ $("#colorPicker").spectrum({
     ["#000000", "#940008", "#840008", "#ad2929", "#637321", "#296b00", "#29006b", "#21007b", "#52007b", "#84007b"]
     ]
 });
-
-
-function GetCanvasAtResoution(newWidth, canvas)
-{
-    if (canvas.width != newWidth) {
-        var scaleMultiplier = newWidth / canvas.width;
-        var objects = canvas.getObjects();
-        for (var i in objects) {
-            objects[i].scaleX = objects[i].scaleX * scaleMultiplier;
-            objects[i].scaleY = objects[i].scaleY * scaleMultiplier;
-            objects[i].left = objects[i].left * scaleMultiplier;
-            objects[i].top = objects[i].top * scaleMultiplier;
-            objects[i].setCoords();
-        }
-        canvas.setWidth(canvas.getWidth() * scaleMultiplier);
-        canvas.setHeight(canvas.getHeight() * scaleMultiplier);
-        canvas.renderAll();
-        canvas.calcOffset();
-    }
-    return canvas.toDataURL();
-}
-
-$('#dLButton').bind('click', function(){
-    data = GetCanvasAtResoution(1000, canvas);
-    GetCanvasAtResoution(500, canvas);
-    var scaleMultiplier = $('#rightCanvas').width() / canvas.width;
-    $("#iCanvas").html('<img width=' + canvas.getWidth()*scaleMultiplier +" height=" + canvas.getHeight()*scaleMultiplier + ' src="' + data +'">');
-    //$("#canvas").hide();
-});
-
-
-function imgOutput()
-{
-    data = GetCanvasAtResoution(1000, canvas);
-    GetCanvasAtResoution(500, canvas);
-    var scaleMultiplier = $('#rightCanvas').width() / canvas.width;
-    $("#iCanvas").html('<img width=' + canvas.getWidth()*scaleMultiplier +" height=" + canvas.getHeight()*scaleMultiplier + ' src="' + data +'">');
-    //$("#canvas").hide();
-}
-
