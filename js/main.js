@@ -458,7 +458,7 @@ function imgOutput()
     //$("#canvas").hide();
 }
 
-var select = $("#maker").each(function(){
+var select = $("#maker li" ).each(function(){
     if(($(this).attr('class')) == "active")
     {
         console.log($(this).attr('class'));
