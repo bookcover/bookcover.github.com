@@ -466,4 +466,4 @@ var select = $("#maker li" ).each(function(){
     }
     }); 
     
-$('#text').text(select);
+$('#test').text(select);
