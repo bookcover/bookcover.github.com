@@ -1,20 +1,3 @@
-book=books[Math.floor(Math.random()*books.length)];
-console.log(book);
-var defaultFontSize = 50;
-
-$("#labelColor").hide();
-
-
-//캔버스 설정
-var canvas = new fabric.Canvas('canvas', {
-    //backgroundColor : 'rgb(255,255,255)',
-    allowTouchScrolling : true,
-});
-
-
-sCover ="img/"+(Math.floor(Math.random() *20)+1) + ".jpg";
-sNumber = Math.floor(Math.random() *999)+1
-
 //초기 변수 설정
 var cCoverArt;
 var cCoverLine;
@@ -457,3 +440,4 @@ function imgOutput()
     $("#iCanvas").html('<img width=' + canvas.getWidth()*scaleMultiplier +" height=" + canvas.getHeight()*scaleMultiplier + ' src="' + data +'">');
     //$("#canvas").hide();
 }
+
