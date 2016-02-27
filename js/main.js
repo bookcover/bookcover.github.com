@@ -25,4 +25,4 @@ var canvas = new fabric.Canvas('canvas', {
 sCover ="img/"+(Math.floor(Math.random() *20)+1) + ".jpg";
 sNumber = Math.floor(Math.random() *999)+1
 
-document.write("<script type='text/javascript' src='"+ select +".js'><"+"/script>");  
+document.write("<script type='text/javascript' src='js/"+ select +".js'><"+"/script>");  
