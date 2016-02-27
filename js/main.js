@@ -5,7 +5,6 @@ var defaultFontSize = 50;
 $("#labelColor").hide();
 
 
-
 //캔버스 설정
 var canvas = new fabric.Canvas('canvas', {
     //backgroundColor : 'rgb(255,255,255)',
@@ -83,7 +82,7 @@ function init() {
     cTitle = new fabric.Text(book.title , {
     top : 460,
     left : 30,
-    fontFamily : 'mj',
+    fontFamily : 'mj, batang',
     fontSize : defaultFontSize,
     });
     canvas.add(cTitle);
