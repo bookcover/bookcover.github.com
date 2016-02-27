@@ -457,10 +457,3 @@ function imgOutput()
     $("#iCanvas").html('<img width=' + canvas.getWidth()*scaleMultiplier +" height=" + canvas.getHeight()*scaleMultiplier + ' src="' + data +'">');
     //$("#canvas").hide();
 }
-
-var select = $("#maker").each(function(){
-    if(($(this).attr('class')) == "selected")
-        return $(this).attr('id');
-    });
-    
-$('#text').text(select);
