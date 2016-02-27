@@ -458,11 +458,13 @@ function imgOutput()
     //$("#canvas").hide();
 }
 
-var select = $("#maker li" ).each(function(){
+var select;
+$("#maker li" ).each(function(){
     if(($(this).attr('class')) == "active")
     {
         console.log($(this).attr('class'));
-        return $(this).attr('id');
+        select =  $(this).attr('id');
+        return false;
     }
     }); 
     
