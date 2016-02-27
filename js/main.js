@@ -180,7 +180,7 @@ function init() {
     $("#publisher").val(cPublisher.text);
     //상대위치로 위치가 결정되는 요소의 위치를 조정해줌.
     alignCover();
-    
+    imgOutput();
 }
 
 init();
@@ -200,6 +200,7 @@ setTimeout(function() {
         cTranslator.left = cAuthor.left + cAuthor.getBoundingRectWidth()+10;
         alignCover();
         canvas.renderAll();
+        imgOutput();
     }
     else
     {
@@ -447,7 +448,6 @@ $('#dLButton').bind('click', function(){
     //$("#canvas").hide();
 });
 
-imgOutput();
 
 function imgOutput()
 {
