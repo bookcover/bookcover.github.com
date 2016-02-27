@@ -460,6 +460,7 @@ function imgOutput()
 
 var select = $("#maker").each(function(){
     if(($(this).attr('class')) == "active")
+        $('#text').text(select);
         return $(this).attr('id');
     });
     
