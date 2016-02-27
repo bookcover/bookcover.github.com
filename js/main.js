@@ -180,7 +180,6 @@ function init() {
     $("#publisher").val(cPublisher.text);
     //상대위치로 위치가 결정되는 요소의 위치를 조정해줌.
     alignCover();
-    imgOutput();
 }
 
 init();
@@ -200,12 +199,13 @@ setTimeout(function() {
         cTranslator.left = cAuthor.left + cAuthor.getBoundingRectWidth()+10;
         alignCover();
         canvas.renderAll();
-        imgOutput();
     }
     else
     {
         console.log("크롬 아님");
     }
+    imgOutput();
+
 }, 2500);
 
 function titleSplit(value)
