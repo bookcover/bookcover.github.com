@@ -86,17 +86,6 @@ function imgOutput()
 
 document.write("<script type='text/javascript' src='js/"+ select +".js'><"+"/script>");  
 
-$('#maker li').bind('click', function(){
-    $('#maker li').each(function(){
-       if($(this).attr('class') == 'active')
-       {
-           $(this).attr('class', '');
-       }
-    });
-    $(this).attr('class', 'active');
-});
-
-
 
 //canvas 리사이즈 관련 답변
 //http://stackoverflow.com/questions/30862356/fabric-js-resize-canvas-to-fit-screen

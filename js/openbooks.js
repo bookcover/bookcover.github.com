@@ -1,5 +1,5 @@
 //열린책들 표지를 만들어주는 스크립트
-
+console.log("열린책들");
 //캔버스 초기 세팅을 위한 함수
 function init() {    
     canvas.clear();
