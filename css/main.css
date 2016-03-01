@@ -12,16 +12,16 @@
 }
 
 @font-face{
- font-family:'SungDongGothic';
- font-style:normal;
- src:url('../fonts/sungdong.woff') format('woff');
+    font-family:'SungDongGothic';
+    font-style:normal;
+    src:url('../fonts/sungdong.woff') format('woff');
 }
 
 @font-face{
- font-family:'SungDongGothicB';
- font-style:normal;
- font-weight:600;
- src:url('../fonts/sungdong.woff') format('woff');
+    font-family:'SungDongGothicB';
+    font-style:normal;
+    font-weight:600;
+    src:url('../fonts/sungdong.woff') format('woff');
 }
 
 body{font-family:'나눔바른고딕', 'NanumBarunGothic', nbg}

@@ -7,11 +7,62 @@ $("#maker li" ).each(function(){
         select =  $(this).attr('id');
         return false;
     }
-}); 
+});
 
 book=books[Math.floor(Math.random()*books.length)];
 console.log(book);
 var defaultFontSize = 50;
+
+//라벨 색 결정
+var lColor;
+//책 프리셋에 라벨색이 지정되어 있다면 일단 그 색을 따름.
+if(book.labelColor !== "")
+{
+    lColor = book.labelColor;
+}
+else
+{   //색상이 지정되어 있지 않으면 랜덤으로 만들어낸다.
+    lColor = randomColor();
+}
+
+//hex컬러값에서 hsl로 변환하는 함수
+function hexToHsl(color)
+{
+    var rgb = [],  fail = false;
+    hex = (color+'').replace(/#/, '');
+    for (var i = 0; i < 6; i+=2) {
+       rgb.push(parseInt(hex.substr(i,2),16));
+       fail = fail || rgb[rgb.length - 1].toString() === 'NaN';
+    }
+    //console.log(rgb);
+    return rgbToHsl(rgb[0],rgb[1],rgb[2]);
+}
+//rgb값을 넣으면 hsl값으로 변환해주는 함수
+function rgbToHsl(r, g, b){
+    //console.log(g);
+    r /= 255, g /= 255, b /= 255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+
+    if (max == min) { h = s = 0; } 
+    else {
+            var d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+            switch (max){
+                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                    case g: h = (b - r) / d + 2; break;
+                    case b: h = (r - g) / d + 4; break;
+            }
+
+            h /= 6;
+    }
+
+    return [(h*360+0.5)|0, ((s*100+0.5)|0) , ((l*100+0.5)|0)];
+}
+
+
+
 
 $("#labelColor").hide();
 
@@ -23,9 +74,21 @@ var canvas = new fabric.Canvas('canvas', {
 });
 
 
-sCover ="img/"+(Math.floor(Math.random() *20)+1) + ".jpg";
-sNumber = Math.floor(Math.random() *999)+1
+var sCover ="img/"+(Math.floor(Math.random() *20)+1) + ".jpg";
+var sNumber = Math.floor(Math.random() *999)+1
 
+var dColor = function(){
+        var colorThief = new ColorThief();
+        rgb = colorThief.getColor(function (){
+            img = new Image();
+            img.src = sCover;
+            console.log(img);
+            return img;
+            }());
+        return "#"+ rgb[0].toString(16) + rgb[1].toString(16) + rgb[2].toString(16);
+}();
+
+console.log("대표컬러 : " + dColor);
 //초기 변수 설정
 var cCoverArt;
 var cCoverLine;
@@ -39,9 +102,6 @@ var cTranslator;
 var cPublisher;
 var cgLDTBox;
 var cCover;
-
-
-
 
 function GetCanvasAtResoution(newWidth, canvas)
 {
@@ -82,9 +142,20 @@ function imgOutput()
     //$("#canvas").hide();
 }
 
+function randomColor()
+{
+    r = (Math.floor(Math.random()*256));
+    g = (Math.floor(Math.random()*256));
+    b = (Math.floor(Math.random()*256));
+    console.log("RGB : " + "#"+ r.toString(16) + g.toString(16) + b.toString(16));
+    return "#"+ r.toString(16) + g.toString(16) + b.toString(16);
+}
 
 
-document.write("<script type='text/javascript' src='js/"+ select +".js'><"+"/script>");  
+
+
+document.write("<script type='text/javascript' src='js/"+ select +".js'><"+"/script>");
+
 
 
 //canvas 리사이즈 관련 답변
