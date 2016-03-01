@@ -213,7 +213,6 @@ function titleSplit(value)
     if (cTitle.getBoundingRectWidth() > canvas.getWidth() * 0.75 || cTitle.getText().search(/[\n|\r]/) > 0)
     {
         cTitle.setFontSize(defaultFontSize * 0.74);
-        labelWidth(cTitle.getBoundingRectWidth());
         console.log(cTitle.getBoundingRectWidth());
         if (cTitle.getBoundingRectWidth() > canvas.getWidth() * 0.75)
         {
@@ -227,11 +226,9 @@ function titleSplit(value)
             var t2 = value.substr(splitPoint, value.length).replace(/^\s+/, "");
             cTitle.setFontSize(defaultFontSize * 0.6);
             cTitle.setText(t1 + "\n" + t2);
-            labelWidth(cTitle.getBoundingRectWidth());
         }
         if (cTitle.getBoundingRectWidth() > canvas.getWidth() * 0.75)
         {
-            labelWidth(canvas.getWidth() * 0.75);
             var t1 = value.substr(0, value.length / 2);
             var t2 = value.substr(value.length / 2, value.length).replace(/^\s+/, "");
             cTitle.setFontSize(defaultFontSize * 0.6);
@@ -242,7 +239,6 @@ function titleSplit(value)
     {
         cTitle.setFontSize(defaultFontSize);
         cTitle.setText(value);
-        labelWidth(cTitle.getBoundingRectWidth());
     }
     canvas.renderAll();
 }
