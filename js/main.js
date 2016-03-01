@@ -85,7 +85,9 @@ img.src = sCover;
 img.onload = function(){    
     rgb = colorThief.getColor(this);
     dColor =  "#"+ rgb[0].toString(16) + rgb[1].toString(16) + rgb[2].toString(16);
+    img.remove();
 }
+
 
 console.log("대표컬러 : " + dColor);
 //초기 변수 설정
