@@ -202,21 +202,7 @@ function init() {
 
 init();
 
-//크롬 브라우저에서 웹폰트가 바로 적용되지 않는 문제가 있어 그것을 갱신해주는 코드
-setInterval(function () {
-    var agent = navigator.userAgent.toLowerCase();
-    //크롬에서 제대로 렌더링이 안돼는 문제가 있어서 크롬 판정 코드 삽입.
-    //
-    //엣지브라우저가 크롬 에이전트를 가져다 쓰므로 엣지 판정 코드도 삽입
-    if ((agent.indexOf("applewebkit") != -1) && (agent.indexOf("edge") == -1)) {
-    } else
-    {
-        console.log("크롬 아님");
-    }
-    init();
-    canvas.renderAll();
-    //imgOutput();
-}, 1000);
+
 
 function titleSplit(value)
 {
@@ -268,6 +254,7 @@ function drawCover(id, value) {
             canvas.renderAll();
             break;
         case 'title' :
+            console.log("텍스트박스")
             titleSplit(value);
             alignCover();
             canvas.renderAll();
@@ -290,6 +277,8 @@ function drawCover(id, value) {
             break;
         case 'publisher':
             cPublisher.setText(value);
+        default:
+            canvas.renderAll();
     }
 }
 
@@ -302,7 +291,7 @@ function alignCover() {
 }
 
 //폼에 이벤트를 걸어줌
-$("#bcForm :text").bind('keyup',
+$("#bcForm :input").bind('keyup',
         function () {
             drawCover(this.id, this.value);
             canvas.renderAll();
@@ -402,3 +391,18 @@ $("#colorPicker").spectrum({
 });
 
 
+//크롬 브라우저에서 웹폰트가 바로 적용되지 않는 문제가 있어 그것을 갱신해주는 코드
+setInterval(function () {
+    var agent = navigator.userAgent.toLowerCase();
+    //크롬에서 제대로 렌더링이 안돼는 문제가 있어서 크롬 판정 코드 삽입.
+    //
+    //엣지브라우저가 크롬 에이전트를 가져다 쓰므로 엣지 판정 코드도 삽입
+    if ((agent.indexOf("applewebkit") != -1) && (agent.indexOf("edge") == -1)) {
+    } else
+    {
+        console.log("크롬 아님");
+    }
+    //init();
+    canvas.renderAll();
+    //imgOutput();
+}, 1000);
