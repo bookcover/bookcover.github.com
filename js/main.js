@@ -79,13 +79,13 @@ var sNumber = Math.floor(Math.random() *999)+1
 
 var dColor = function(){
         var colorThief = new ColorThief();
-        rgb = colorThief.getColor(function (){
-            img = new Image();
-            img.src = sCover;
-            console.log(img);
-            return img;
-            }());
-        return "#"+ rgb[0].toString(16) + rgb[1].toString(16) + rgb[2].toString(16);
+        var rgb;
+        img = new Image();
+        img.src = sCover;
+        img.onload = function(){    
+            rgb = colorThief.getColor(this);
+            return "#"+ rgb[0].toString(16) + rgb[1].toString(16) + rgb[2].toString(16);
+        }
 }();
 
 console.log("대표컬러 : " + dColor);
