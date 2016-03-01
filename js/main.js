@@ -77,16 +77,15 @@ var canvas = new fabric.Canvas('canvas', {
 var sCover ="img/"+(Math.floor(Math.random() *20)+1) + ".jpg";
 var sNumber = Math.floor(Math.random() *999)+1
 
-var dColor = function(){
-        var colorThief = new ColorThief();
-        var rgb;
-        img = new Image();
-        img.src = sCover;
-        img.onload = function(){    
-            rgb = colorThief.getColor(this);
-            return "#"+ rgb[0].toString(16) + rgb[1].toString(16) + rgb[2].toString(16);
-        }
-}();
+var dColor; 
+var colorThief = new ColorThief();
+var rgb;
+img = new Image();
+img.src = sCover;
+img.onload = function(){    
+    rgb = colorThief.getColor(this);
+    dColor =  "#"+ rgb[0].toString(16) + rgb[1].toString(16) + rgb[2].toString(16);
+}
 
 console.log("대표컬러 : " + dColor);
 //초기 변수 설정
