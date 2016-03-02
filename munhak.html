@@ -72,6 +72,8 @@
                         <div class="form-group">
                             <label for="title">책 제목</label>
                             <textarea class="form-control" rows="2" id="title" placeholder="책 제목"></textarea>
+                            <button type="button" class="btn" id="tSizeDown">-</button>
+                            <button type="button" class="btn" id="tSizeUp">+</button>
                         </div>
                         <div class="form-group">
                             <label for="originalTitle">원제</label>
@@ -88,13 +90,18 @@
                             <input type="text" class="form-control" id="author" placeholder="저자">
                         </div>
                         <div class="form-group">
-                            <label for="translator">옮긴이(옵션)</label>
+                            <label for="publisher">저자(원어) *옵션</label>
+                            <input type="text" class="form-control" id="oAuthor" placeholder="저자(원어)" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="translator">옮긴이 *옵션</label>
                             <input type="text" class="form-control" id="translator" placeholder="옮긴이">
                         </div>
                         <div class="form-group">
                             <label for="publisher">출판사</label>
                             <input type="text" class="form-control" id="publisher" placeholder="출판사" value="민음사">
                         </div>
+                        
 
 
                         <div class="form-group">

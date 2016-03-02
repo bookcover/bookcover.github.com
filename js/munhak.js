@@ -1,5 +1,8 @@
 //문학동네 표지를 만들어주는 스크립트//민음사 표지 제작 스크립트
 console.log("문학동네");
+//타이틀 기본 폰트 크기
+var defaultFontSize = 66;
+var defaultCanvasWidth = 500;
 //캔버스 초기 세팅을 위한 함수
 var coverImageHeight = 515;
 //표지위에 써있는 문자열
@@ -14,7 +17,10 @@ $("#title").val(book.title);
 $("#originalTitle").val(book.originalTitle);
 $("#author").val(book.author);
 $("#translator").val(book.translator);
+
+//문학동네 전용
 $("#publisher").val("문학동네");
+$("#oAuthor").val(book.oAuthor);
 
 //표지 바탕색이 어두운 색이므로 라벨컬러가 밝은색이어야 한다
 //파란색 계열일 경우 바탕색때문에 잘 안보이므로 자동선택에서는 제외.
@@ -122,7 +128,7 @@ function init() {
         lineHeight: 1,
     });
     canvas.add(cTitle);
-
+    titleAlign(cTitle.text);
     //titleSplit(cTitle.text);
 
     //저자
@@ -196,27 +202,39 @@ function init() {
         fill: "white",
     });
     canvas.add(cPublisher);
+    
+    if($("#oAuthor").val() != "")
+    {
+        cOriginalTitle.setText($("#oAuthor").val() + " : " + cOriginalTitle.getText());
+    }
+    
     //상대위치로 위치가 결정되는 요소의 위치를 조정해줌.
     alignCover();
+    GetCanvasAtResoution(defaultCanvasWidth, canvas);
+
 }
 
 init();
 
 
 
-function titleSplit(value)
+function titleAlign(value)
 {
     cTitle.setText(value);
     cTitle.setFontSize(defaultFontSize);
-    cTitle.setScaleX(1);
+    //cTitle.setScaleX(1);
     console.log(cTitle.getBoundingRectWidth());
-    if (cTitle.getBoundingRectWidth() > canvas.getWidth() * 0.75 || cTitle.getText().search(/[\n|\r]/) > 0)
+    //텍스트박스가 차지하고 있는 너비가 전체 캔버스 크기의 80%가 넘거나
+    //텍스트 내에 개행문자가 있는 경우
+    canvasWidth = canvas.getWidth();
+    if (cTitle.getBoundingRectWidth() > canvasWidth * 0.8 || cTitle.getText().search(/[\n|\r]/) > 0)
     {
-        cTitle.setFontSize(defaultFontSize * 0.74);
+        //cTitle.setFontSize(defaultFontSize * 0.9);
         console.log(cTitle.getBoundingRectWidth());
-        if (cTitle.getBoundingRectWidth() > canvas.getWidth() * 0.75)
+        //개행문자가 있는데도(2줄이상인데도) 너비가 80%를 넘는다.
+        if (cTitle.getBoundingRectWidth() > canvasWidth * 0.8)
         {
-            splitPoint = value.length * (370 / cTitle.getBoundingRectWidth())
+            splitPoint = value.length * ((canvasWidth*0.8) / cTitle.getBoundingRectWidth())
             if (splitPoint < value.length / 2)
             {
                 splitPoint = value.length - splitPoint;
@@ -224,22 +242,23 @@ function titleSplit(value)
             console.log(splitPoint);
             var t1 = value.substr(0, splitPoint);
             var t2 = value.substr(splitPoint, value.length).replace(/^\s+/, "");
-            cTitle.setFontSize(defaultFontSize * 0.6);
+            //cTitle.setFontSize(defaultFontSize * 0.6);
             cTitle.setText(t1 + "\n" + t2);
         }
-        if (cTitle.getBoundingRectWidth() > canvas.getWidth() * 0.75)
+        if (cTitle.getBoundingRectWidth() > canvasWidth * 0.8)
         {
             var t1 = value.substr(0, value.length / 2);
             var t2 = value.substr(value.length / 2, value.length).replace(/^\s+/, "");
-            cTitle.setFontSize(defaultFontSize * 0.6);
+            //cTitle.setFontSize(defaultFontSize * 0.6);
             cTitle.setText(t1 + "\n" + t2);
-            cTitle.setScaleX(370 / cTitle.getBoundingRectWidth());
+            //cTitle.setScaleX(370 / cTitle.getBoundingRectWidth());
         }
     } else
     {
         cTitle.setFontSize(defaultFontSize);
         cTitle.setText(value);
     }
+    alignCover();
     canvas.renderAll();
 }
 //값이 계속 변함 수정 필요
@@ -247,22 +266,18 @@ function drawCover(id, value) {
     switch (id) {
         case 'series':
             cSeries.setText(value + " " + sNumber);
-            canvas.renderAll();
             break;
         case 'title' :
             console.log("텍스트박스")
-            titleSplit(value);
+            titleAlign(value);
             alignCover();
-            canvas.renderAll();
             break;
         case 'originalTitle':
             cOriginalTitle.setText(value);
-            canvas.renderAll();
             break;
         case 'author':
             cAuthor.setText(value);
             alignCover();
-            canvas.renderAll();
             break;
         case 'translator':
             if (value != "")
@@ -273,26 +288,44 @@ function drawCover(id, value) {
             break;
         case 'publisher':
             cPublisher.setText(value);
+        case 'oAuthor' :
+            if(value == "")
+                cOriginalTitle.setText($('#originalTitle').val());
+            else
+                cOriginalTitle.setText($("#oAuthor").val() + " : " + $('#originalTitle').val());
+
         default:
-            canvas.renderAll();
     }
 }
 
 function alignCover() {
-    //cLabelD.setTop(cTitle.getTop()+cTitle.getBoundingRectHeight()+20);
-    //cAuthor.setTop(cLabelD.top + cLabelD.height + 15);
-    //cTranslator.setTop(cAuthor.top+cAuthor.fontSize * 0.3);
-    //cTranslator.setLeft(cAuthor.left + cAuthor.getBoundingRectWidth() + 10);
-    //cOriginalTitle.setTop(cLabelD.top + cLabelD.height/2+2);
+    //옮긴이만 상대적으로 맞춰주면 된다.
+    cTranslator.setTop(cTitle.getTop() + cTitle.getBoundingRectHeight() + 45);
 }
 
 //폼에 이벤트를 걸어줌
 $("#bcForm :input").bind('keyup',
         function () {
+            GetCanvasAtResoution(defaultCanvasWidth, canvas);
             drawCover(this.id, this.value);
+            GetCanvasAtResoution(500, canvas);
             canvas.renderAll();
         }
 );
+
+//타이틀 폰트크기 조정 이벤트
+$("#tSizeUp,#tSizeDown").bind('click',function(){
+    if(this.id == "tSizeUp")
+    {
+        cTitle.setFontSize(cTitle.getFontSize() + 2);
+    }
+    else
+    {
+        cTitle.setFontSize(cTitle.getFontSize() -2 );
+    }
+    alignCover();
+    canvas.renderAll();
+});
 /*
  $(document).ready(function(){
  function readURL(input) {
@@ -359,21 +392,11 @@ $("#colorPicker").spectrum({
     },
     change: function (color) {
         hexColor = color.toHexString();
-        console.log(hexColor);
         $("#labalColor").css("background-color", color.toHexString()).val(color.toHexString());
         cSeriesBox.setFill(color.toHexString());
-        var hsv = color.toHsv();
-        console.log(hsv);
-        if ((hsv.s <= 0.4 && hsv.v > 0.9)) {
-        }
-        //cOriginalTitle.setFill("black");
-        else if (hsv.h > 50 && hsv.h <= 180 && hsv.s == 1 && hsv.v == 1) {
-        }
-        //cOriginalTitle.setFill("black");
-        else
-            //cOriginalTitle.setFill("white");
+        cAuthor.setFill(color.toHexString());
+        cTranslator.setFill(color.toHexString());
         canvas.renderAll();
-
     },
     palette: [
         ["#ffffff", "#fff7de", "#ffffce", "#ffffbd", "#ffffd6", "#b5ff84", "#c6efde", "#efffff", "#efe7f7", "#dea5d6"],
@@ -388,7 +411,7 @@ $("#colorPicker").spectrum({
 
 
 //크롬 브라우저에서 웹폰트가 바로 적용되지 않는 문제가 있어 그것을 갱신해주는 코드
-setInterval(function () {
+setTimeout(function () {
     var agent = navigator.userAgent.toLowerCase();
     //크롬에서 제대로 렌더링이 안돼는 문제가 있어서 크롬 판정 코드 삽입.
     //
@@ -396,7 +419,6 @@ setInterval(function () {
     if ((agent.indexOf("applewebkit") != -1) && (agent.indexOf("edge") == -1)) {
     } else
     {
-        console.log("크롬 아님");
     }
     //init();
     canvas.renderAll();

@@ -11,7 +11,6 @@ $("#maker li" ).each(function(){
 
 book=books[Math.floor(Math.random()*books.length)];
 console.log(book);
-var defaultFontSize = 50;
 
 //라벨 색 결정
 var lColor;

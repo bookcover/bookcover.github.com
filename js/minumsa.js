@@ -1,5 +1,8 @@
 //민음사 표지 제작 스크립트
 
+//타이틀 기본 폰트 크기
+var defaultFontSize = 50;
+
 //캔버스 초기 세팅을 위한 함수
 function init() {
     canvas.clear();
