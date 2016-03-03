@@ -1,15 +1,37 @@
-//열린책들 표지를 만들어주는 스크립트
+//문학동네 표지를 만들어주는 스크립트//민음사 표지 제작 스크립트
+console.log("열린책들");
+
+//기본 캔버스 렌더링은 가로 1000을 기준으로 한다.
 
 //타이틀 기본 폰트 크기
-var defaultFontSize = 50;
-
-
-console.log("열린책들");
+var defaultFontSize = 66;
+var defaultCanvasWidth = 500;
 //캔버스 초기 세팅을 위한 함수
+
+//커버이미지가 시작되는 좌표
+var coverImageTop = 330;
+
+//열린책들은 시리즈명을 표기하지 않음.
+
+$("#title").val(book.title);
+$("#originalTitle").val(book.originalTitle);
+$("#author").val(book.author);
+$("#translator").val(book.translator);
+
+//열린책들 전용
+$("#publisher").val("열린책들");
+$("#oAuthor").val(book.oAuthor);
+
+//열린책들 원제는 무조건 파란색 아니면 노란색이다.
+//노란색 #FDCF00
+//파란색 #365BAB
+
+lColor = Math.floor(Math.random()*2)?"#FDCF00":"#365BAB";
+
 function init() {
     canvas.clear();
     //커버이미지 기준선
-    cCoverLine = new fabric.Line([500, 355, 0, 355], {
+    cCoverLine = new fabric.Line([0, 330, 1000, 330], {
         originY: 'bottom',
         fill: 'red',
         stroke: 'red',
@@ -19,183 +41,163 @@ function init() {
     canvas.add(cCoverLine);
 
     cCover = new fabric.Rect({
-        top: 355,
+        top: -1,
         left: -1,
         width: canvas.getWidth() + 1,
-        height: canvas.getHeight() - 355 + 1,
-        fill: "white",
+        height: coverImageTop + 1,
+        fill: "#ffffff",
         selectable: false,
     });
     canvas.add(cCover);
 
     //커버이미지
     fabric.Image.fromURL(sCover, function (img) {
-        ratio = img.getWidth() / canvas.getWidth();
-        console.log(img.getWidth());
+        ratio = img.getHeight() / (canvas.getHeight() - coverImageTop);
+        console.log("비율 : " + ratio);
         cCoverArt = img.set({
-            left: -1,
-            top: -1,
-            height: 355 + 1,
-            width: (ratio > 1) ? (img.getWidth() / ratio + 1) : (img.getWidth() * ratio + 1),
+            left: -2,
+            //width : 1000+1,
+            //height : img.getHeight()*ratio+1,
+            scaleX: img.scaleX / ratio,
+            scaleY: img.scaleY / ratio,
+            top: coverImageTop,
+            originY: 'top',
+            originX : 'left',
         });
-        console.log(cCoverArt.width);
+        cCoverArt.setLeft(-(cCoverArt.getWidth()-canvas.getWidth())/2-2);
+        if (cCoverArt.getHeight() > canvas.getHeight() - coverImageTop)
+        {
+            //cCoverArt.setTop((515 - cCoverArt.getHeight() - 1) / 2);
+        }
         canvas.add(cCoverArt);
         cCoverArt.sendToBack();
         cCoverLine.sendToBack();
     });
 
-    //시리즈명
-    cSeries = new fabric.Text("세계문학전집 " + sNumber, {
-        left: 40,
-        top: 380,
-        fontFamily: 'SungDongGothic',
-        fontSize: 15,
-        scaleX: 0.9,
-    });
-    canvas.add(cSeries);
-    $("#series").val(cSeries.text);
     //타이틀
-    cTitle = new fabric.Text(book.title, {
-        top: 460,
-        left: 30,
+    cTitle = new fabric.Text($("#title").val(), {
+        top: 75,
+        left: 85,
+        textAlign: "left",
+        originX: "left",
+        fill: "black",
         fontFamily: 'mj, batang',
-        fontSize: defaultFontSize,
+        fontSize: 65,
+        lineHeight: 1,
     });
     canvas.add(cTitle);
-    $("#title").val(book.title);
+    //titleAlign(cTitle.text);
 
-    //라벨 색 결정
-    var lColor;
-    //책 프리셋에 라벨색이 지정되어 있다면 일단 그 색을 따름.
-    if (book.labelColor !== "")
-    {
-        lColor = book.labelColor;
-    } else
-    {   //색상이 지정되어 있지 않으면 랜덤으로 만들어낸다.
-        r = (Math.floor(Math.random() * 256));
-        g = (Math.floor(Math.random() * 256));
-        b = (Math.floor(Math.random() * 256));
-        lColor = "#" + r.toString(16) + g.toString(16) + b.toString(16);
-        console.log("RGB : " + lColor);
-    }
-    lColor = dColor;
-    //타이틀 상단 라인
-    cLabelU = new fabric.Rect({
-        top: 410,
-        left: 30,
-        width: cTitle.getBoundingRectWidth(), //임시
-        height: 30,
-        fill: lColor,
-        selectable: false,
-    });
-    canvas.add(cLabelU);
-    //타이틀 하단 라인
-    cLabelD = new fabric.Rect({
-        originX: 'left',
-        originY: 'top',
-        top: cLabelU.top + 130,
-        left: 30,
-        width: cLabelU.width,
-        height: cLabelU.height,
-        fill: cLabelU.fill,
-        selectable: false,
-    });
-    canvas.add(cLabelD);
-    //입력된 타이틀을 2줄로 분할할 것인지,크기조정을 할 것인지 조정해준다.
-    titleSplit(cTitle.text);
-
-    cOriginalTitle = new fabric.Text(book.originalTitle, {
+    cOriginalTitle = new fabric.Text($("#originalTitle").val(), {
         //originX : "left",
-        originY: "center",
-        top: cLabelD.top + cLabelD.height / 2 + 2,
-        left: cLabelD.left + 12,
-        fill: "white",
-        fontFamily: 'nbg',
-        fontSize: cLabelD.height * 0.4,
-        selectable: false,
+        //originY : "center",
+        top: cTitle.getTop() + cTitle.getBoundingRectHeight() + 30,
+        left: 85,
+        textAlign: "left",
+        originX: "left",
+        originY: "top",
+        fill: lColor,
+        fontFamily: 'mj, batang',
+        fontSize: 30,
+        selectable: true,
+        lineHeight: 1,
     });
     canvas.add(cOriginalTitle);
-    cOriginalTitle.bringToFront();
-    $("#originalTitle").val(cOriginalTitle.text)
-
+    
     //저자
-    cAuthor = new fabric.Text(book.author, {
-        top: cLabelD.top + cLabelD.height + 15,
-        left: 40,
-        fontFamily: 'nbg',
-        fontSize: 15,
-    })
+    cAuthor = new fabric.Text($("#author").val(), {
+        top: coverImageTop - 20,
+        fontFamily: 'nbg, dotum',
+        fontSize: 20,
+        fontWeight: 600,
+        left: 85,
+        textAlign: "left",
+        originX: "left",
+        originY: "bottom",
+        lineHeight: 1,
+        fill: "black",
+    });
     canvas.add(cAuthor);
-    $("#author").val(cAuthor.text);
+
+    //cOriginalTitle.bringToFront();
+
+    //중간에 장르가 들어가야 할 것 같다.
+
     //번역자
-    if (book.translator != "")
-        cTranslator = new fabric.Text(book.translator + " 옮김", {
-            top: cAuthor.top + cAuthor.fontSize * 0.3,
-            left: cAuthor.left + cAuthor.getBoundingRectWidth() + 10,
-            fontFamily: 'nbg',
-            fontSize: cAuthor.fontSize * 0.7,
+    if ($("#translator").val() != "")
+        cTranslator = new fabric.Text($("#translator").val() + " 옮김", {
+            top: cAuthor.getTop(),
+            left: cAuthor.getLeft() +cAuthor.getBoundingRectWidth() + 20,
+            textAlign: "left",
+            originX: "left",
+            originY: "bottom",
+            fill: 'black',
+            fontFamily: 'nbg, dotum',
+            fontSize: 20,
+            lineHeight: 1,
         });
     else
-        cTranslator = new fabric.Text(book.translator, {
-            top: cAuthor.top + cAuthor.fontSize * 0.3,
-            left: cAuthor.left + cAuthor.getBoundingRectWidth() + 10,
-            fontFamily: 'nbg',
-            fontSize: cAuthor.fontSize * 0.7,
+        cTranslator = new fabric.Text($("#translator").val(), {
+            top: cAuthor.getTop(),
+            left: cAuthor.getLeft() + cAuthor.getBoundingRectWidth() + 20,
+            textAlign: "left",
+            originX: "left",
+            originY: "bottom",
+            fill: "black",
+            fontFamily: 'mj, batang',
+            fontSize: 20,
+            lineHeight: 1,
         });
     canvas.add(cTranslator);
-    $("#translator").val(book.translator);
+
     //출판사
-    cPublisher = new fabric.Text("민음사", {
-        top: 795,
-        left: 30,
-        fontFamily: 'SungDongGothicB',
-        fontSize: 20,
+    var mode = Math.floor(Math.random()*2)
+    cPublisher = new fabric.Text("열린"+"\n"+"책들", {
+        top: canvas.getHeight()-80,
+        left: 85,
+        width : 80,
+        textAlign: "center",
+        originX: "left",
+        originY: "bottom",
+        fill: mode?"#ffffff":"#000000",
+        fontFamily: 'SungDongGothic',
+        fontSize: 40,
+        fontWeight : "bold",
+        lineHeight: 1,
+        backgroundColor : mode?"#000000":"#FFFFFF",
+        scaleY : 1.5,
     });
     canvas.add(cPublisher);
-    $("#publisher").val(cPublisher.text);
+    
     //상대위치로 위치가 결정되는 요소의 위치를 조정해줌.
     alignCover();
+    //캔버스에 이미지 로딩하는데 시간이 걸려 캔버스 크기를 조정하는데 레이아웃이 깨지는 문제가 있어 지연시간을 줌.
+    setTimeout(function(){GetCanvasAtResoution(500, canvas);}, 100);
+
 }
 
 init();
 
-//크롬 브라우저에서 웹폰트가 바로 적용되지 않는 문제가 있어 그것을 갱신해주는 코드
-setTimeout(function () {
-    canvas.renderAll();
-    var agent = navigator.userAgent.toLowerCase();
-    //크롬에서 제대로 렌더링이 안돼는 문제가 있어서 크롬 판정 코드 삽입.
-    //엣지브라우저가 크롬 에이전트를 가져다 쓰므로 엣지 판정 코드도 삽입
-    if ((agent.indexOf("applewebkit") != -1) && (agent.indexOf("edge") == -1)) {
-        cSeries.setText(cSeries.text);
-        cTitle.setText(cTitle.text);
-        cAuthor.setText(cAuthor.text);
-        cTranslator.setText(cTranslator.text);
-        labelWidth(cTitle.getBoundingRectWidth());
-        cTranslator.left = cAuthor.left + cAuthor.getBoundingRectWidth() + 10;
-        alignCover();
-        canvas.renderAll();
-    } else
-    {
-        console.log("크롬 아님");
-    }
-    imgOutput();
 
-}, 2500);
 
-function titleSplit(value)
+
+function titleAlign(value)
 {
     cTitle.setText(value);
     cTitle.setFontSize(defaultFontSize);
-    cTitle.setScaleX(1);
+    //cTitle.setScaleX(1);
     console.log(cTitle.getBoundingRectWidth());
-    if (cTitle.getBoundingRectWidth() > canvas.getWidth() * 0.75 || cTitle.getText().search(/[\n|\r]/) > 0)
+    //텍스트박스가 차지하고 있는 너비가 전체 캔버스 크기의 80%가 넘거나
+    //텍스트 내에 개행문자가 있는 경우
+    canvasWidth = canvas.getWidth();
+    if (cTitle.getBoundingRectWidth() > canvasWidth * 0.8 || cTitle.getText().search(/[\n|\r]/) > 0)
     {
-        cTitle.setFontSize(defaultFontSize * 0.74);
-        labelWidth(cTitle.getBoundingRectWidth());
+        //cTitle.setFontSize(defaultFontSize * 0.9);
         console.log(cTitle.getBoundingRectWidth());
-        if (cTitle.getBoundingRectWidth() > canvas.getWidth() * 0.75)
+        //개행문자가 있는데도(2줄이상인데도) 너비가 80%를 넘는다.
+        if (cTitle.getBoundingRectWidth() > canvasWidth * 0.8)
         {
-            splitPoint = value.length * (370 / cTitle.getBoundingRectWidth())
+            splitPoint = value.length * ((canvasWidth*0.8) / cTitle.getBoundingRectWidth())
             if (splitPoint < value.length / 2)
             {
                 splitPoint = value.length - splitPoint;
@@ -203,25 +205,23 @@ function titleSplit(value)
             console.log(splitPoint);
             var t1 = value.substr(0, splitPoint);
             var t2 = value.substr(splitPoint, value.length).replace(/^\s+/, "");
-            cTitle.setFontSize(defaultFontSize * 0.6);
+            //cTitle.setFontSize(defaultFontSize * 0.6);
             cTitle.setText(t1 + "\n" + t2);
-            labelWidth(cTitle.getBoundingRectWidth());
         }
-        if (cTitle.getBoundingRectWidth() > canvas.getWidth() * 0.75)
+        if (cTitle.getBoundingRectWidth() > canvasWidth * 0.8)
         {
-            labelWidth(canvas.getWidth() * 0.75);
             var t1 = value.substr(0, value.length / 2);
             var t2 = value.substr(value.length / 2, value.length).replace(/^\s+/, "");
-            cTitle.setFontSize(defaultFontSize * 0.6);
+            //cTitle.setFontSize(defaultFontSize * 0.6);
             cTitle.setText(t1 + "\n" + t2);
-            cTitle.setScaleX(370 / cTitle.getBoundingRectWidth());
+            //cTitle.setScaleX(370 / cTitle.getBoundingRectWidth());
         }
     } else
     {
         cTitle.setFontSize(defaultFontSize);
         cTitle.setText(value);
-        labelWidth(cTitle.getBoundingRectWidth());
     }
+    alignCover();
     canvas.renderAll();
 }
 //값이 계속 변함 수정 필요
@@ -229,21 +229,18 @@ function drawCover(id, value) {
     switch (id) {
         case 'series':
             cSeries.setText(value + " " + sNumber);
-            canvas.renderAll();
             break;
         case 'title' :
-            titleSplit(value);
+            console.log("텍스트박스")
+            titleAlign(value);
             alignCover();
-            canvas.renderAll();
             break;
         case 'originalTitle':
             cOriginalTitle.setText(value);
-            canvas.renderAll();
             break;
         case 'author':
             cAuthor.setText(value);
             alignCover();
-            canvas.renderAll();
             break;
         case 'translator':
             if (value != "")
@@ -254,70 +251,89 @@ function drawCover(id, value) {
             break;
         case 'publisher':
             cPublisher.setText(value);
+        case 'oAuthor' :
+            if(value == "")
+                cOriginalTitle.setText($('#originalTitle').val());
+            else
+                cOriginalTitle.setText($("#oAuthor").val() + " : " + $('#originalTitle').val());
+
+        default:
     }
-}
-//들어온 길이에 맞춰서 라벨 길이를 조정해주는 함수
-function labelWidth(lWidth) {
-    cLabelU.width = lWidth;
-    cLabelD.width = lWidth;
 }
 
 function alignCover() {
-    cLabelD.setTop(cTitle.getTop() + cTitle.getBoundingRectHeight() + 20);
-    cAuthor.setTop(cLabelD.top + cLabelD.height + 15);
-    cTranslator.setTop(cAuthor.top + cAuthor.fontSize * 0.3);
-    cTranslator.setLeft(cAuthor.left + cAuthor.getBoundingRectWidth() + 10);
-    cOriginalTitle.setTop(cLabelD.top + cLabelD.height / 2 + 2);
+    //옮긴이만 상대적으로 맞춰주면 된다.
+    //cTranslator.setTop(cTitle.getTop() + cTitle.getBoundingRectHeight() + 45);
+
 }
 
 //폼에 이벤트를 걸어줌
-$("#bcForm :text").bind('keyup',
+$("#bcForm :input").bind('keyup',
         function () {
+            GetCanvasAtResoution(defaultCanvasWidth, canvas);
             drawCover(this.id, this.value);
+            GetCanvasAtResoution(500, canvas);
             canvas.renderAll();
         }
 );
-$(document).ready(function () {
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader(); //파일을 읽기 위한 FileReader객체 생성
-            reader.onload = function (e) {
-                //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
-                console.log("읽기 성공");
-                console.log(e);
-                var imgObj = new Image();
-                imgObj.src = event.target.result;
-                imgObj.onload = function () {
-                    cCoverArt.remove();
-                    cCoverArt = new fabric.Image(imgObj);
-                    ratio = cCoverArt.getWidth() / canvas.getWidth();
-                    //cCoverArt.setSourcePath(image);
-                    cCoverArt.set({
-                        left: -1,
-                        top: -1,
-                        height: 355 + 1,
-                        width: 356 / cCoverArt.getHeight() * cCoverArt.getWidth() + 1,
-                        //width : (ratio >1)?(cCoverArt.getWidth()/ratio+1):(cCoverArt.getWidth()*ratio+1),
-                    });
-                    canvas.add(cCoverArt);
-                    cCoverArt.sendToBack();
-                    cCoverLine.sendToBack();
-                    canvas.renderAll();
-                }
-            }
-            reader.readAsDataURL(input.files[0]);
-            //File내용을 읽어 dataURL형식의 문자열로 저장
-        }
-    }//readURL()--
 
-    //file 양식으로 이미지를 선택(값이 변경) 되었을때 처리하는 코드
-    $("#coverFileInput").change(function () {
-        readURL(this);
-    });
+//타이틀 폰트크기 조정 이벤트
+$("#tSizeUp,#tSizeDown").bind('click',function(){
+    if(this.id == "tSizeUp")
+    {
+        cTitle.setFontSize(cTitle.getFontSize() + 2);
+    }
+    else
+    {
+        cTitle.setFontSize(cTitle.getFontSize() -2 );
+    }
+    alignCover();
+    canvas.renderAll();
 });
+/*
+ $(document).ready(function(){
+ function readURL(input) {
+ if (input.files && input.files[0]) {
+ var reader = new FileReader(); //파일을 읽기 위한 FileReader객체 생성
+ reader.onload = function (e) { 
+ //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
+ console.log("읽기 성공");
+ console.log(e);
+ var imgObj = new Image();
+ imgObj.src = event.target.result;
+ imgObj.onload = function () {
+ cCoverArt.remove();
+ cCoverArt = new fabric.Image(imgObj);
+ ratio = cCoverArt.getWidth()/canvas.getWidth();
+ //cCoverArt.setSourcePath(image);
+ cCoverArt.set({
+ left : -1,
+ top : -1,
+ height : 355 +1,
+ width : 356/cCoverArt.getHeight()*cCoverArt.getWidth()+1, 
+ //width : (ratio >1)?(cCoverArt.getWidth()/ratio+1):(cCoverArt.getWidth()*ratio+1),
+ });
+ canvas.add(cCoverArt);
+ cCoverArt.sendToBack();
+ cCoverLine.sendToBack();
+ canvas.renderAll();
+ }
+ }                    
+ reader.readAsDataURL(input.files[0]);
+ //File내용을 읽어 dataURL형식의 문자열로 저장
+ }
+ }//readURL()--
+ 
+ //file 양식으로 이미지를 선택(값이 변경) 되었을때 처리하는 코드
+ $("#coverFileInput").change(function(){
+ readURL(this);
+ });
+ });
+ 
+ */
 
 $("#colorPicker").spectrum({
-    color: cLabelU.getFill(),
+    color: lColor,
     showInput: true,
     className: "full-spectrum",
     //showInitial: true,
@@ -340,20 +356,11 @@ $("#colorPicker").spectrum({
     },
     change: function (color) {
         hexColor = color.toHexString();
-        console.log(hexColor);
         $("#labalColor").css("background-color", color.toHexString()).val(color.toHexString());
-        cLabelU.setFill(color.toHexString());
-        cLabelD.setFill(color.toHexString());
-        var hsv = color.toHsv();
-        console.log(hsv);
-        if ((hsv.s <= 0.4 && hsv.v > 0.9))
-            cOriginalTitle.setFill("black");
-        else if (hsv.h > 50 && hsv.h <= 180 && hsv.s == 1 && hsv.v == 1)
-            cOriginalTitle.setFill("black");
-        else
-            cOriginalTitle.setFill("white");
+        cSeriesBox.setFill(color.toHexString());
+        cAuthor.setFill(color.toHexString());
+        cTranslator.setFill(color.toHexString());
         canvas.renderAll();
-
     },
     palette: [
         ["#ffffff", "#fff7de", "#ffffce", "#ffffbd", "#ffffd6", "#b5ff84", "#c6efde", "#efffff", "#efe7f7", "#dea5d6"],
@@ -365,3 +372,20 @@ $("#colorPicker").spectrum({
         ["#000000", "#940008", "#840008", "#ad2929", "#637321", "#296b00", "#29006b", "#21007b", "#52007b", "#84007b"]
     ]
 });
+
+
+//크롬 브라우저에서 웹폰트가 바로 적용되지 않는 문제가 있어 그것을 갱신해주는 코드
+setTimeout(function () {
+    var agent = navigator.userAgent.toLowerCase();
+    //크롬에서 제대로 렌더링이 안돼는 문제가 있어서 크롬 판정 코드 삽입.
+    //
+    //엣지브라우저가 크롬 에이전트를 가져다 쓰므로 엣지 판정 코드도 삽입
+    if ((agent.indexOf("applewebkit") != -1) && (agent.indexOf("edge") == -1)) {
+    } else
+    {
+    }
+    //init();
+    canvas.renderAll();
+    //imgOutput();
+
+}, 1000);

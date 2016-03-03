@@ -1,61 +1,100 @@
 <html>
-<head></head>
-<body>
-<script src="js/vendor/color-thief.min.js" type="text/javascript"></script>
-<script>
-function hexToHsl(color)
-{
-    var rgb = [],  fail = false;
-    hex = (color+'').replace(/#/, '');
-    for (var i = 0; i < 6; i+=2) {
-       rgb.push(parseInt(hex.substr(i,2),16));
-       fail = fail || rgb[rgb.length - 1].toString() === 'NaN';
-    }
-    //console.log(rgb);
-    return rgbToHsl(rgb[0],rgb[1],rgb[2]);
-}
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <canvas id="canvas" width="1000" height="1550"></canvas>
 
-function rgbToHsl(r, g, b){
-    //console.log(g);
-    r /= 255, g /= 255, b /= 255;
-    var max = Math.max(r, g, b), min = Math.min(r, g, b);
-    var h, s, l = (max + min) / 2;
-
-    if (max == min) { h = s = 0; } 
-    else {
-            var d = max - min;
-            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-
-            switch (max){
-                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-                    case g: h = (b - r) / d + 2; break;
-                    case b: h = (r - g) / d + 4; break;
+        <script src="js/vendor/fabric.min.js"></script>
+        <script src="js/vendor/color-thief.min.js" type="text/javascript"></script>
+        <script>
+            function hexToHsl(color)
+            {
+                var rgb = [], fail = false;
+                hex = (color + '').replace(/#/, '');
+                for (var i = 0; i < 6; i += 2) {
+                    rgb.push(parseInt(hex.substr(i, 2), 16));
+                    fail = fail || rgb[rgb.length - 1].toString() === 'NaN';
+                }
+                //console.log(rgb);
+                return rgbToHsl(rgb[0], rgb[1], rgb[2]);
             }
 
-            h /= 6;
-    }
+            function rgbToHsl(r, g, b) {
+                //console.log(g);
+                r /= 255, g /= 255, b /= 255;
+                var max = Math.max(r, g, b), min = Math.min(r, g, b);
+                var h, s, l = (max + min) / 2;
 
-    return [(h*100+0.5)|0, ((s*100+0.5)|0) , ((l*100+0.5)|0)];
-}/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-        
-console.log(hexToHsl("#555555"));
+                if (max == min) {
+                    h = s = 0;
+                } else {
+                    var d = max - min;
+                    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+                    switch (max) {
+                        case r:
+                            h = (g - b) / d + (g < b ? 6 : 0);
+                            break;
+                        case g:
+                            h = (b - r) / d + 2;
+                            break;
+                        case b:
+                            h = (r - g) / d + 4;
+                            break;
+                    }
+
+                    h /= 6;
+                }
+
+                return [(h * 100 + 0.5) | 0, ((s * 100 + 0.5) | 0), ((l * 100 + 0.5) | 0)];
+            }/* 
+             * To change this license header, choose License Headers in Project Properties.
+             * To change this template file, choose Tools | Templates
+             * and open the template in the editor.
+             */
+
+            console.log(hexToHsl("#555555"));
 
 
-temp = function(){
-        dColor = new ColorThief();
-        temp= dColor.getColor(function (){
-                img = new Image();
-                img.src = "img/1.jpg";
-                return img;
-                }());
-        return temp;
-        }();
-console.log(temp);
+//            temp = function () {
+//                dColor = new ColorThief();
+//                temp = dColor.getColor(function () {
+//                    img = new Image();
+//                    img.src = "img/1.jpg";
+//                    return img;
+//                }());
+//                return temp;
+//            }();
+//            console.log(temp);
 
-</script>
-</body>
+            
+            //캔버스 설정
+            var canvas = new fabric.Canvas('canvas', {
+                //backgroundColor : 'rgb(255,255,255)',
+                allowTouchScrolling : true,
+            });
+
+            //타이틀
+            var mode = Math.floor(Math.random()*2)
+            cTitle = new fabric.Text("열린"+"\n"+"책들", {
+                top: 50,
+                left: canvas.getWidth() / 2,
+                width : 80,
+                textAlign: "center",
+                originX: "center",
+                fill: mode?"#ffffff":"#000000",
+                fontFamily: 'mj',
+                fontSize: 40,
+                fontWeight : "bold",
+                lineHeight: 1,
+                backgroundColor : mode?"#000000":"#FFFFFF",
+                scaleY : 1.5,
+            });
+            canvas.add(cTitle);
+            titleAlign(cTitle.text);
+            //titleSplit(cTitle.text);
+
+        </script>
+    </body>
 </html>

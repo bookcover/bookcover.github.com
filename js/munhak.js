@@ -3,7 +3,7 @@ console.log("문학동네");
 //타이틀 기본 폰트 크기
 var defaultFontSize = 66;
 var defaultCanvasWidth = 500;
-//캔버스 초기 세팅을 위한 함수
+//캔버스 초기 세팅을 위한 변수
 var coverImageHeight = 515;
 //표지위에 써있는 문자열
 var cCoverLetter;
@@ -128,7 +128,6 @@ function init() {
         lineHeight: 1,
     });
     canvas.add(cTitle);
-    titleAlign(cTitle.text);
     //titleSplit(cTitle.text);
 
     //저자
@@ -210,6 +209,7 @@ function init() {
     
     //상대위치로 위치가 결정되는 요소의 위치를 조정해줌.
     alignCover();
+    titleAlign(cTitle.text);
     GetCanvasAtResoution(defaultCanvasWidth, canvas);
 
 }
@@ -265,7 +265,7 @@ function titleAlign(value)
 function drawCover(id, value) {
     switch (id) {
         case 'series':
-            cSeries.setText(value + " " + sNumber);
+            cSeries.setText(value + "\n" + sNumber);
             break;
         case 'title' :
             console.log("텍스트박스")
