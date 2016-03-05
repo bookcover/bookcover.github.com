@@ -63,6 +63,7 @@ function init() {
             top: coverImageTop,
             originY: 'top',
             originX : 'left',
+            pngCompression : 9,
         });
         cCoverArt.setLeft(-(cCoverArt.getWidth()-canvas.getWidth())/2-2);
         if (cCoverArt.getHeight() > canvas.getHeight() - coverImageTop)
@@ -172,8 +173,8 @@ function init() {
     //상대위치로 위치가 결정되는 요소의 위치를 조정해줌.
     alignCover();
     //캔버스에 이미지 로딩하는데 시간이 걸려 캔버스 크기를 조정하는데 레이아웃이 깨지는 문제가 있어 지연시간을 줌.
-    setTimeout(function(){GetCanvasAtResoution(500, canvas);}, 500);
-
+    //setTimeout(function(){GetCanvasAtResoution(500, canvas);}, 500);
+    
 }
 
 init();
@@ -389,3 +390,11 @@ setTimeout(function () {
     //imgOutput();
 
 }, 1000);
+
+canvasSet = setInterval(function() {
+    if(canvas.getObjects().length == 8){
+        console.log(canvas.getObjects().length);
+        clearInterval(canvasSet);
+        GetCanvasAtResoution(500, canvas);
+    }
+ }, 100);
