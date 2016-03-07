@@ -158,13 +158,14 @@ function init() {
     canvas.add(cTranslator);
 
     //출판사
-    var mode = Math.floor(Math.random()*2)
+    var mode = Math.floor(Math.random()*2);
+    var position = Math.floor(Math.random()*2);
     cPublisher = new fabric.Text("열린"+"\n"+"책들", {
         top: canvas.getHeight()-80,
-        left: 85,
+        left: position?85:canvas.getWidth()-85,
         width : 80,
         textAlign: "center",
-        originX: "left",
+        originX: position?"left":"right",
         originY: "bottom",
         fill: mode?"#ffffff":"#000000",
         fontFamily: 'SungDongGothic',
