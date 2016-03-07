@@ -120,7 +120,8 @@ function GetCanvasAtResoution(newWidth, canvas)
         canvas.renderAll();
         canvas.calcOffset();
     }
-    return canvas.toDataURL();
+    //return canvas.toDataURL();
+    return true;
 }
 
 

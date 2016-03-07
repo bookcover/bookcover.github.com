@@ -1,3 +1,8 @@
+document.getElementById("canvas").onresize = waveToAudience;
+  function waveToAudience() {
+    alert("Waving like I've never waved before!");
+  }
+
 //문학동네 표지를 만들어주는 스크립트//민음사 표지 제작 스크립트
 console.log("열린책들");
 
@@ -5,7 +10,7 @@ console.log("열린책들");
 
 //타이틀 기본 폰트 크기
 var defaultFontSize = 66;
-var defaultCanvasWidth = 500;
+var defaultCanvasWidth = 1000;
 //캔버스 초기 세팅을 위한 함수
 
 //커버이미지가 시작되는 좌표
@@ -64,6 +69,7 @@ function init() {
             originY: 'top',
             originX : 'left',
             pngCompression : 9,
+            async : false,
         });
         cCoverArt.setLeft(-(cCoverArt.getWidth()-canvas.getWidth())/2-2);
         if (cCoverArt.getHeight() > canvas.getHeight() - coverImageTop)
@@ -87,7 +93,7 @@ function init() {
         lineHeight: 1,
     });
     canvas.add(cTitle);
-    //titleAlign(cTitle.text);
+    titleAlign(cTitle.text);
 
     cOriginalTitle = new fabric.Text($("#originalTitle").val(), {
         //originX : "left",
@@ -174,55 +180,63 @@ function init() {
     alignCover();
     //캔버스에 이미지 로딩하는데 시간이 걸려 캔버스 크기를 조정하는데 레이아웃이 깨지는 문제가 있어 지연시간을 줌.
     //setTimeout(function(){GetCanvasAtResoution(500, canvas);}, 500);
-    
+    //GetCanvasAtResoution(500, canvas);
 }
 
 init();
 
 
-
-
 function titleAlign(value)
 {
     cTitle.setText(value);
-    cTitle.setFontSize(defaultFontSize);
-    //cTitle.setScaleX(1);
+    //cTitle.setFontSize(defaultFontSize);
+    cTitle.setScaleX(1);
+    cTitle.setScaleY(1);
     console.log(cTitle.getBoundingRectWidth());
     //텍스트박스가 차지하고 있는 너비가 전체 캔버스 크기의 80%가 넘거나
     //텍스트 내에 개행문자가 있는 경우
     canvasWidth = canvas.getWidth();
-    if (cTitle.getBoundingRectWidth() > canvasWidth * 0.8 || cTitle.getText().search(/[\n|\r]/) > 0)
+    cTitle.setFontSize(defaultFontSize);
+    chWidth = ( canvas.getWidth() * 0.8/(cTitle.getText().length) );
+
+    console.log("텍스트 크기 : " + cTitle.getBoundingRectWidth() + "\n캔버스 크기 : "+canvas.getWidth() + "\n텍스트 너비 : " + cTitle.getWidth());
+    //텍스트 너비가 캔버스너비보다 작고 계산된 타이틀 폰트 크기가 최대 폰트 크기보다 크면
+    if(cTitle.getBoundingRectWidth() <  canvas.getWidth() * 0.8 && chWidth >=defaultFontSize)
     {
-        //cTitle.setFontSize(defaultFontSize * 0.9);
-        console.log(cTitle.getBoundingRectWidth());
-        //개행문자가 있는데도(2줄이상인데도) 너비가 80%를 넘는다.
-        if (cTitle.getBoundingRectWidth() > canvasWidth * 0.8)
-        {
-            splitPoint = value.length * ((canvasWidth*0.8) / cTitle.getBoundingRectWidth())
-            if (splitPoint < value.length / 2)
-            {
-                splitPoint = value.length - splitPoint;
-            }
-            console.log(splitPoint);
-            var t1 = value.substr(0, splitPoint);
-            var t2 = value.substr(splitPoint, value.length).replace(/^\s+/, "");
-            //cTitle.setFontSize(defaultFontSize * 0.6);
-            cTitle.setText(t1 + "\n" + t2);
-        }
-        if (cTitle.getBoundingRectWidth() > canvasWidth * 0.8)
-        {
-            var t1 = value.substr(0, value.length / 2);
-            var t2 = value.substr(value.length / 2, value.length).replace(/^\s+/, "");
-            //cTitle.setFontSize(defaultFontSize * 0.6);
-            cTitle.setText(t1 + "\n" + t2);
-            //cTitle.setScaleX(370 / cTitle.getBoundingRectWidth());
-        }
-    } else
-    {
+        //최대 폰트 크기를 유지해야 하므로 기본 설정된 폰트 크기로 설정한다.
         cTitle.setFontSize(defaultFontSize);
-        cTitle.setText(value);
+    }//텍스트 너비가 캔버스 너비보다 작고 계산된 타이틀 폰트 크기가 최대 폰트보다 작으면
+    else if(cTitle.getBoundingRectWidth() <  canvas.getWidth() * 0.8 && chWidth < defaultFontSize)
+    {
+        cTitle.setFontSize(chWidth);
     }
-    alignCover();
+    //텍스트 너비가 캔버스 너비보다 크고 계산된 폰트 크기가 기본 폰트의 80%보다는 크면 
+    else if(cTitle.getBoundingRectWidth() >  canvas.getWidth() * 0.8 && chWidth > defaultFontSize*0.8)
+    {
+        //그냥 계산된 폰트 크기를 사용한다.
+        cTitle.setFontSize(chWidth);
+    }//텍스트 너비가 캔버스 너비보다 크고 계산된 폰트 크기가 기본 폰트의 80%보다 작으면
+    else if(cTitle.getBoundingRectWidth() >  canvas.getWidth() * 0.8 && chWidth <defaultFontSize*0.8)
+    {
+        //폰트 크기를 기본 폰트의 80%로 맞추고 폰트 너비를 줄여 박스 크기에 맞춘다.
+        //width = 0.9*(canvas.getWidth()* 0.9)/cTitle.getBoundingRectWidth();
+        console.log("폰트 스케일 조정");
+        console.log( canvas.getWidth() * 0.8+ " , "+ (cTitle.getText().length) + " , " +cTitle.getFontSize() )
+        console.log((canvas.getWidth()* 0.8)/cTitle.getBoundingRectWidth());
+        cTitle.setFontSize(defaultFontSize*0.8);
+        //cTitle.setScaleX(1);
+        var ratio = (canvas.getWidth()* 0.8)/cTitle.getBoundingRectWidth();
+        if(ratio >= 1)
+        {
+            cTitle.setScaleX(1);
+        }
+        else
+        {
+            cTitle.setScaleX(ratio);
+        }
+        
+        //cTitle.setWidth(canvas.getWidth() * 0.9*(canvas.getWidth()* 0.9)/cTitle.getBoundingRectWidth());
+    }
     canvas.renderAll();
 }
 //값이 계속 변함 수정 필요
@@ -263,16 +277,18 @@ function drawCover(id, value) {
 }
 
 function alignCover() {
-    //옮긴이만 상대적으로 맞춰주면 된다.
-    //cTranslator.setTop(cTitle.getTop() + cTitle.getBoundingRectHeight() + 45);
+    //원제만 상대적으로 맞춰주면 된다.
+    cOriginalTitle.setTop(cTitle.getTop() + cTitle.getBoundingRectHeight() + 30);
 
 }
 
 //폼에 이벤트를 걸어줌
 $("#bcForm :input").bind('keyup',
         function () {
-            GetCanvasAtResoution(defaultCanvasWidth, canvas);
-            drawCover(this.id, this.value);
+            if(GetCanvasAtResoution(defaultCanvasWidth, canvas))
+            {
+                drawCover(this.id, this.value);
+            }
             GetCanvasAtResoution(500, canvas);
             canvas.renderAll();
         }
@@ -291,6 +307,8 @@ $("#tSizeUp,#tSizeDown").bind('click',function(){
     alignCover();
     canvas.renderAll();
 });
+
+
 /*
  $(document).ready(function(){
  function readURL(input) {
@@ -391,9 +409,9 @@ setTimeout(function () {
 
 }, 1000);
 
+//이미지 로딩이 늦어서 타이밍이 맞지 않는 부분이 있어 캔버스에 오브젝트가 다 로딩됐는지 확인하고 캔버스 사이즈 조정
 canvasSet = setInterval(function() {
     if(canvas.getObjects().length == 8){
-        console.log(canvas.getObjects().length);
         clearInterval(canvasSet);
         GetCanvasAtResoution(500, canvas);
     }
