@@ -126,6 +126,7 @@ function GetCanvasAtResoution(newWidth, canvas)
 
 
 $('#dLButton').bind('click', function(){
+    var data;
     if(GetCanvasAtResoution(1000, canvas))
         data = canvas.toDataURL();
     GetCanvasAtResoution(500, canvas);
@@ -137,7 +138,9 @@ $('#dLButton').bind('click', function(){
 
 function imgOutput()
 {
-    data = GetCanvasAtResoution(1000, canvas);
+    var data;
+    if(GetCanvasAtResoution(1000, canvas))
+        data = canvas.toDataURL();
     GetCanvasAtResoution(500, canvas);
     var scaleMultiplier = $('#rightCanvas').width() / canvas.width;
     $("#iCanvas").html('<img width=' + canvas.getWidth()*scaleMultiplier +" height=" + canvas.getHeight()*scaleMultiplier + ' src="' + data +'">');
