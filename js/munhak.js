@@ -326,47 +326,66 @@ $("#tSizeUp,#tSizeDown").bind('click',function(){
     alignCover();
     canvas.renderAll();
 });
-/*
- $(document).ready(function(){
- function readURL(input) {
- if (input.files && input.files[0]) {
- var reader = new FileReader(); //파일을 읽기 위한 FileReader객체 생성
- reader.onload = function (e) { 
- //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
- console.log("읽기 성공");
- console.log(e);
- var imgObj = new Image();
- imgObj.src = event.target.result;
- imgObj.onload = function () {
- cCoverArt.remove();
- cCoverArt = new fabric.Image(imgObj);
- ratio = cCoverArt.getWidth()/canvas.getWidth();
- //cCoverArt.setSourcePath(image);
- cCoverArt.set({
- left : -1,
- top : -1,
- height : 355 +1,
- width : 356/cCoverArt.getHeight()*cCoverArt.getWidth()+1, 
- //width : (ratio >1)?(cCoverArt.getWidth()/ratio+1):(cCoverArt.getWidth()*ratio+1),
- });
- canvas.add(cCoverArt);
- cCoverArt.sendToBack();
- cCoverLine.sendToBack();
- canvas.renderAll();
- }
- }                    
- reader.readAsDataURL(input.files[0]);
- //File내용을 읽어 dataURL형식의 문자열로 저장
- }
- }//readURL()--
- 
- //file 양식으로 이미지를 선택(값이 변경) 되었을때 처리하는 코드
- $("#coverFileInput").change(function(){
- readURL(this);
- });
- });
- 
- */
+
+ //커버아트 파일 불러오기
+ $(document).ready(function () {
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader(); //파일을 읽기 위한 FileReader객체 생성
+            reader.onload = function (e) {
+                //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
+                console.log("읽기 성공");
+                console.log(e);
+                
+                var imgObj = new Image();
+                imgObj.src = event.target.result;
+                imgObj.onload = function () {
+                    cCoverArt.remove();
+                    
+                    cCoverArt = new fabric.Image(imgObj);
+                    var ratio = cCoverArt.getWidth() / canvas.getWidth();
+                    console.log("비율 : " + ratio);
+                    cCoverArt.set({
+                        left: -2,
+                        top: -1,
+                        //width : 1000+1,
+                        //height : img.getHeight()*ratio+1,
+                        scaleX: cCoverArt.scaleX / ratio*1.01,
+                        scaleY: cCoverArt.scaleY / ratio*1.01,
+                        pngCompression : 9,
+                        async : false,
+                    });
+                    cCoverArt.setLeft(-(cCoverArt.getWidth()-canvas.getWidth())/2-2);
+                    cCoverArt.setTop(-(cCoverArt.getHeight()-coverImageHeight)/2-2);
+                    console.log("커버아트top : " + cCoverArt.getTop());
+                    canvas.add(cCoverArt);
+                    cCoverArt.sendToBack();
+                    cCoverLine.sendToBack();
+                    canvas.renderAll();
+                }
+            }
+            reader.readAsDataURL(input.files[0]);
+            //File내용을 읽어 dataURL형식의 문자열로 저장
+        }
+    }//readURL()-- 
+    //file 양식으로 이미지를 선택(값이 변경) 되었을때 처리하는 코드
+    $("#coverFileInput").change(function () {
+        
+        if(GetCanvasAtResoution(1000, canvas))
+        {
+            readURL(this);
+        } 
+        canvasSet = setInterval(function() {
+            if(canvas.getObjects().length ==11){
+                console.log("조정중");
+                clearInterval(canvasSet);
+                GetCanvasAtResoution(500, canvas);
+            }
+        }, 100);
+
+        canvas.renderAll();
+    });
+});
 
 $("#colorPicker").spectrum({
     color: cSeriesBox.getFill(),
