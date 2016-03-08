@@ -272,7 +272,6 @@ function drawCover(id, value) {
             cSeries.setText($('#series').val() + "\n" + value);
             break;
         case 'title' :
-            console.log("텍스트박스")
             titleAlign(value);
             alignCover();
             break;

@@ -164,7 +164,7 @@ function init() {
     cPublisher = new fabric.Text("열린"+"\n"+"책들", {
         top: canvas.getHeight()-80,
         left: position?85:canvas.getWidth()-85,
-        width : 80,
+        //width : 80,
         textAlign: "left",
         originX: position?"left":"right",
         originY: "bottom",
