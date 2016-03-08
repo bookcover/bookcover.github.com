@@ -51,7 +51,7 @@ var books = new Array(
             "title": "역시 내 청춘 러브코메디는 잘못됐다.",
             "labelColor": "",
             "originalTitle": "はり俺の青春ラブコメはまちがっている。",
-            "author": "	와타리 와타루",
+            "author": "와타리 와타루",
             "oAuthor": "渡 航",
             "translator": "박정원",
         },
