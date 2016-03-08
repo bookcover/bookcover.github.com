@@ -161,7 +161,7 @@ function init() {
     //출판사
     var mode = Math.floor(Math.random()*2);
     var position = Math.floor(Math.random()*2);
-    cPublisher = new fabric.Text("열린"+"\n"+"책들", {
+    cPublisher = new fabric.Text($("#publisher").val().substr(0,2) + "\n" + $("#publisher").val().substr(2,2), {
         top: canvas.getHeight()-80,
         left: position?85:canvas.getWidth()-85,
         //width : 80,
@@ -169,7 +169,7 @@ function init() {
         originX: position?"left":"right",
         originY: "bottom",
         fill: mode?"#ffffff":"#000000",
-        fontFamily: 'SungDongGothic',
+        fontFamily: 'hanlasan',
         fontSize: 40,
         fontWeight : "bold",
         lineHeight: 1,
@@ -376,6 +376,10 @@ setTimeout(function () {
 canvasSet = setInterval(function() {
     if(canvas.getObjects().length == 8){
         clearInterval(canvasSet);
+        //인장이 제대로 세팅되지 않아서 이쪽으로 배치
+        var value = $("#publisher").val().substr(0,2) + "\n" + $("#publisher").val().substr(2,2);
+        cPublisher.setText(value);
+        alignCover();
         GetCanvasAtResoution(500, canvas);
     }
  }, 100);
