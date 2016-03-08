@@ -130,7 +130,7 @@ $('#dLButton').bind('click', function(){
     if(GetCanvasAtResoution(1000, canvas))
     {
         data = canvas.toDataURL();
-        window.open(data, "toDataURL() image", "width=" +canvas.getWidth() +"," + "height=" +canvas.getHeight());
+        //window.open(data, "toDataURL() image", "width=" +canvas.getWidth() +"," + "height=" +canvas.getHeight());
         //console.log(data);
     }
     GetCanvasAtResoution(500, canvas);
