@@ -127,20 +127,25 @@ function GetCanvasAtResoution(newWidth, canvas)
 
 $('#dLButton').bind('click', function(){
     var data;
-    if(GetCanvasAtResoution(1000, canvas))
+    if(GetCanvasAtResoution(500, canvas))
+    {
         data = canvas.toDataURL();
+        window.open(data, "toDataURL() image", "width=" +canvas.getWidth() +"," + "height=" +canvas.getHeight());
+        console.log(data);
+    }
     GetCanvasAtResoution(500, canvas);
     var scaleMultiplier = $('#rightCanvas').width() / canvas.width;
     $("#iCanvas").html('<img width=' + canvas.getWidth()*scaleMultiplier +" height=" + canvas.getHeight()*scaleMultiplier + ' src="' + data +'">');
     //this.href = data;
     //this.download = $("title").val() + ".png";
     //window.open(data, "toDataURL() image", "width=" +canvas.getWidth()*scaleMultiplier +"," + "height=" +canvas.getHeight()*scaleMultiplier);
-    downloadCanvas(this, canvas, $("title").val() + ".png");
+    downloadCanvas(this, data, $("title").val() + ".png");
+    
     //$("#canvas").hide();
 });
 
-function downloadCanvas(link, canvasId, filename) {
-    link.href = canvasId.toDataURL();
+function downloadCanvas(link, data, filename) {
+    link.href = data;
     link.download = filename;
 }
 
