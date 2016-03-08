@@ -127,7 +127,7 @@ function GetCanvasAtResoution(newWidth, canvas)
 
 $('#dLButton').bind('click', function(){
     var data;
-    if(GetCanvasAtResoution(1000, canvas))
+    if(GetCanvasAtResoution(500, canvas))
     {
         data = canvas.toDataURL();
         //window.open(data, "toDataURL() image", "width=" +canvas.getWidth() +"," + "height=" +canvas.getHeight());
