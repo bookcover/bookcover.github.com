@@ -131,7 +131,7 @@ $('#dLButton').bind('click', function(){
     {
         data = canvas.toDataURL();
         window.open(data, "toDataURL() image", "width=" +canvas.getWidth() +"," + "height=" +canvas.getHeight());
-        console.log(data);
+        //console.log(data);
     }
     GetCanvasAtResoution(500, canvas);
     var scaleMultiplier = $('#rightCanvas').width() / canvas.width;
@@ -140,6 +140,7 @@ $('#dLButton').bind('click', function(){
     //this.download = $("title").val() + ".png";
     //window.open(data, "toDataURL() image", "width=" +canvas.getWidth()*scaleMultiplier +"," + "height=" +canvas.getHeight()*scaleMultiplier);
     var filename = $("title").val() + ".png";
+    console.log(filename);
     downloadCanvas(this, data, filename);
     
     //$("#canvas").hide();
