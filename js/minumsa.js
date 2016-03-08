@@ -3,6 +3,15 @@
 //타이틀 기본 폰트 크기
 var defaultFontSize = 50;
 
+$("#series").val("세계문학전집");
+$("#title").val(book.title);
+$("#originalTitle").val(book.originalTitle);
+$("#author").val(book.author);
+$("#translator").val(book.translator);
+$("#publisher").val("민음사");
+$("#sNumber").val(sNumber);
+
+
 //캔버스 초기 세팅을 위한 함수
 function init() {
     canvas.clear();
@@ -43,7 +52,7 @@ function init() {
     });
 
     //시리즈명
-    cSeries = new fabric.Text("세계문학전집 " + sNumber, {
+    cSeries = new fabric.Text($("#series").val() +" "+ $("#sNumber").val(), {
         left: 40,
         top: 380,
         fontFamily: 'SungDongGothic',
@@ -51,16 +60,14 @@ function init() {
         scaleX: 0.9,
     });
     canvas.add(cSeries);
-    $("#series").val(cSeries.text);
     //타이틀
-    cTitle = new fabric.Text(book.title, {
+    cTitle = new fabric.Text($("#title").val(), {
         top: 460,
         left: 30,
         fontFamily: 'mj, batang',
         fontSize: defaultFontSize,
     });
     canvas.add(cTitle);
-    $("#title").val(book.title);
 
     //타이틀 상단 라인
     cLabelU = new fabric.Rect({
@@ -87,7 +94,7 @@ function init() {
     //입력된 타이틀을 2줄로 분할할 것인지,크기조정을 할 것인지 조정해준다.
     titleSplit(cTitle.text);
 
-    cOriginalTitle = new fabric.Text(book.originalTitle, {
+    cOriginalTitle = new fabric.Text($("#originalTitle").val(), {
         //originX : "left",
         originY: "center",
         top: cLabelD.top + cLabelD.height / 2 + 2,
@@ -99,43 +106,40 @@ function init() {
     });
     canvas.add(cOriginalTitle);
     cOriginalTitle.bringToFront();
-    $("#originalTitle").val(cOriginalTitle.text)
 
     //저자
-    cAuthor = new fabric.Text(book.author, {
+    cAuthor = new fabric.Text($("#author").val(), {
         top: cLabelD.top + cLabelD.height + 15,
         left: 40,
         fontFamily: 'nbg',
         fontSize: 15,
     })
     canvas.add(cAuthor);
-    $("#author").val(cAuthor.text);
     //번역자
-    if (book.translator != "")
-        cTranslator = new fabric.Text(book.translator + " 옮김", {
+    if ($("#translator").val() != "")
+        cTranslator = new fabric.Text($("#translator").val() + " 옮김", {
             top: cAuthor.top + cAuthor.fontSize * 0.3,
             left: cAuthor.left + cAuthor.getBoundingRectWidth() + 10,
             fontFamily: 'nbg',
             fontSize: cAuthor.fontSize * 0.7,
         });
     else
-        cTranslator = new fabric.Text(book.translator, {
+        cTranslator = new fabric.Text($("#translator").val(), {
             top: cAuthor.top + cAuthor.fontSize * 0.3,
             left: cAuthor.left + cAuthor.getBoundingRectWidth() + 10,
             fontFamily: 'nbg',
             fontSize: cAuthor.fontSize * 0.7,
         });
     canvas.add(cTranslator);
-    $("#translator").val(book.translator);
     //출판사
-    cPublisher = new fabric.Text("민음사", {
+    cPublisher = new fabric.Text($("#publisher").val(), {
         top: 795,
         left: 30,
         fontFamily: 'SungDongGothicB',
         fontSize: 20,
     });
     canvas.add(cPublisher);
-    $("#publisher").val(cPublisher.text);
+    
     //상대위치로 위치가 결정되는 요소의 위치를 조정해줌.
     alignCover();
 }
@@ -211,22 +215,21 @@ function titleSplit(value)
 function drawCover(id, value) {
     switch (id) {
         case 'series':
-            cSeries.setText(value + " " + sNumber);
-            canvas.renderAll();
+            cSeries.setText(value + " " + $('#sNumber').val());
+            break;
+        case 'sNumber':
+            cSeries.setText($('#series').val() + " " + value);
             break;
         case 'title' :
             titleSplit(value);
             alignCover();
-            canvas.renderAll();
             break;
         case 'originalTitle':
             cOriginalTitle.setText(value);
-            canvas.renderAll();
             break;
         case 'author':
             cAuthor.setText(value);
             alignCover();
-            canvas.renderAll();
             break;
         case 'translator':
             if (value != "")

@@ -21,6 +21,7 @@ $("#translator").val(book.translator);
 //문학동네 전용
 $("#publisher").val("문학동네");
 $("#oAuthor").val(book.oAuthor);
+$("#sNumber").val(sNumber);
 
 //표지 바탕색이 어두운 색이므로 라벨컬러가 밝은색이어야 한다
 //파란색 계열일 경우 바탕색때문에 잘 안보이므로 자동선택에서는 제외.
@@ -103,12 +104,12 @@ function init() {
     console.log("박스너비" + cSeriesBox.getBoundingRectWidth());
 
     //시리즈명
-    cSeries = new fabric.Text($("#series").val() + "\n" + sNumber, {
+    cSeries = new fabric.Text($("#series").val() + "\n" + $("#sNumber").val(), {
         left: cSeriesBox.getLeft() + cSeriesBox.getBoundingRectWidth() + 5,
         top: cSeriesBox.getTop(),
-        fontFamily: 'NanumBarunGothic, Arial',
-        fontSize: 15,
-        fontWeight: 'bold',
+        fontFamily: 'nbg, Arial',
+        fontSize: 17,
+        fontWeight: '600',
         fill: 'black',
         OriginX: 'left',
         stroke: 'white',
@@ -265,7 +266,10 @@ function titleAlign(value)
 function drawCover(id, value) {
     switch (id) {
         case 'series':
-            cSeries.setText(value + "\n" + sNumber);
+            cSeries.setText(value + "\n" + $("#sNumber").val());
+            break;
+        case 'sNumber' :
+            cSeries.setText($('#series').val() + "\n" + value);
             break;
         case 'title' :
             console.log("텍스트박스")
