@@ -132,8 +132,17 @@ $('#dLButton').bind('click', function(){
     GetCanvasAtResoution(500, canvas);
     var scaleMultiplier = $('#rightCanvas').width() / canvas.width;
     $("#iCanvas").html('<img width=' + canvas.getWidth()*scaleMultiplier +" height=" + canvas.getHeight()*scaleMultiplier + ' src="' + data +'">');
+    //this.href = data;
+    //this.download = $("title").val() + ".png";
+    //window.open(data, "toDataURL() image", "width=" +canvas.getWidth()*scaleMultiplier +"," + "height=" +canvas.getHeight()*scaleMultiplier);
+    downloadCanvas(this, canvas, $("title").val() + ".png");
     //$("#canvas").hide();
 });
+
+function downloadCanvas(link, canvasId, filename) {
+    link.href = canvasId.toDataURL();
+    link.download = filename;
+}
 
 
 function imgOutput()

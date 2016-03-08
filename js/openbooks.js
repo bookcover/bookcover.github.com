@@ -180,9 +180,6 @@ function init() {
     
     //상대위치로 위치가 결정되는 요소의 위치를 조정해줌.
     alignCover();
-    //캔버스에 이미지 로딩하는데 시간이 걸려 캔버스 크기를 조정하는데 레이아웃이 깨지는 문제가 있어 지연시간을 줌.
-    //setTimeout(function(){GetCanvasAtResoution(500, canvas);}, 500);
-    //GetCanvasAtResoution(500, canvas);
 }
 
 init();
@@ -311,49 +308,6 @@ $("#tSizeUp,#tSizeDown").bind('click',function(){
     canvas.renderAll();
 });
 
-
-/*
- $(document).ready(function(){
- function readURL(input) {
- if (input.files && input.files[0]) {
- var reader = new FileReader(); //파일을 읽기 위한 FileReader객체 생성
- reader.onload = function (e) { 
- //파일 읽어들이기를 성공했을때 호출되는 이벤트 핸들러
- console.log("읽기 성공");
- console.log(e);
- var imgObj = new Image();
- imgObj.src = event.target.result;
- imgObj.onload = function () {
- cCoverArt.remove();
- cCoverArt = new fabric.Image(imgObj);
- ratio = cCoverArt.getWidth()/canvas.getWidth();
- //cCoverArt.setSourcePath(image);
- cCoverArt.set({
- left : -1,
- top : -1,
- height : 355 +1,
- width : 356/cCoverArt.getHeight()*cCoverArt.getWidth()+1, 
- //width : (ratio >1)?(cCoverArt.getWidth()/ratio+1):(cCoverArt.getWidth()*ratio+1),
- });
- canvas.add(cCoverArt);
- cCoverArt.sendToBack();
- cCoverLine.sendToBack();
- canvas.renderAll();
- }
- }                    
- reader.readAsDataURL(input.files[0]);
- //File내용을 읽어 dataURL형식의 문자열로 저장
- }
- }//readURL()--
- 
- //file 양식으로 이미지를 선택(값이 변경) 되었을때 처리하는 코드
- $("#coverFileInput").change(function(){
- readURL(this);
- });
- });
- 
- */
-
 $("#colorPicker").spectrum({
     color: lColor,
     showInput: true,
@@ -373,15 +327,16 @@ $("#colorPicker").spectrum({
     beforeShow: function () {
 
     },
-    hide: function () {
-
+    hide: function (color) {
+        hexColor = color.toHexString();
+        $("#labalColor").css("background-color", color.toHexString()).val(color.toHexString());
+        cOriginalTitle.setFill(color.toHexString());
+        canvas.renderAll();
     },
     change: function (color) {
         hexColor = color.toHexString();
         $("#labalColor").css("background-color", color.toHexString()).val(color.toHexString());
-        cSeriesBox.setFill(color.toHexString());
-        cAuthor.setFill(color.toHexString());
-        cTranslator.setFill(color.toHexString());
+        cOriginalTitle.setFill(color.toHexString());
         canvas.renderAll();
     },
     palette: [
@@ -391,7 +346,8 @@ $("#colorPicker").spectrum({
         ["#8c8473", "#ef0018", "#ef4210", "#f79400", "#ffff00", "#63d600", "#a5c684", "#5a63d6", "#7b52c6", "#c642ce"],
         ["#736b63", "#d60039", "#d67310", "#f7844a", "#f7de00", "#429400", "#4a944a", "#4200ff", "#9c00de", "#a500c6"],
         ["#39524a", "#b51821", "#944a08", "#a55229", "#8c8c00", "#318c00", "#429484", "#3100c6", "#523984", "#940084"],
-        ["#000000", "#940008", "#840008", "#ad2929", "#637321", "#296b00", "#29006b", "#21007b", "#52007b", "#84007b"]
+        ["#000000", "#940008", "#840008", "#ad2929", "#637321", "#296b00", "#29006b", "#21007b", "#52007b", "#84007b"],
+        ["#FDCF00", "#365BAB"],
     ]
 });
 
