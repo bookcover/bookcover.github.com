@@ -258,6 +258,7 @@ $("#bcForm :text").bind('keyup',
         function () {
             drawCover(this.id, this.value);
             canvas.renderAll();
+            imgOutput();
         }
 );
 $(document).ready(function () {
