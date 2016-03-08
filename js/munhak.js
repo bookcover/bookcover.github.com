@@ -96,7 +96,7 @@ function init() {
         top: 40,
         left: 50,
         width: 10,
-        height: 35,
+        height: 40,
         fill: lColor,
         selectable: false,
     });
@@ -399,7 +399,7 @@ $("#colorPicker").spectrum({
     showSelectionPalette: true,
     maxSelectionSize: 10,
     preferredFormat: "hex",
-    localStorageKey: "spectrum.demo",
+    //localStorageKey: "spectrum.demo",
     move: function (color) {
 
     },
@@ -409,12 +409,13 @@ $("#colorPicker").spectrum({
     beforeShow: function () {
 
     },
-    hide: function () {
-
+    hide: function (color) {
+        cSeriesBox.setFill(color.toHexString());
+        cAuthor.setFill(color.toHexString());
+        cTranslator.setFill(color.toHexString());
+        canvas.renderAll();
     },
     change: function (color) {
-        hexColor = color.toHexString();
-        $("#labalColor").css("background-color", color.toHexString()).val(color.toHexString());
         cSeriesBox.setFill(color.toHexString());
         cAuthor.setFill(color.toHexString());
         cTranslator.setFill(color.toHexString());
@@ -431,6 +432,39 @@ $("#colorPicker").spectrum({
     ]
 });
 
+$("#seriesColor").spectrum({
+    color: cSeries.getFill(),
+    showInput: true,
+    className: "full-spectrum",
+    //showInitial: true,
+    showPalette: true,
+    showSelectionPalette: true,
+    maxSelectionSize: 10,
+    preferredFormat: "hex",
+    //localStorageKey: "spectrum.demo",
+    move: function (color) {
+
+    },
+    show: function () {
+
+    },
+    beforeShow: function () {
+
+    },
+    hide: function (color) {
+        console.log("숨김");
+        cSeries.setFill(color.toHexString());
+        canvas.renderAll();
+    },
+    change: function (color) {
+        console.log("바뀜");
+        cSeries.setFill(color.toHexString());
+        canvas.renderAll();
+    },
+    palette: [
+        ["#ffffff", "#000000"]
+    ]
+});
 
 //크롬 브라우저에서 웹폰트가 바로 적용되지 않는 문제가 있어 그것을 갱신해주는 코드
 setTimeout(function () {
