@@ -165,7 +165,7 @@ function init() {
         top: canvas.getHeight()-80,
         left: position?85:canvas.getWidth()-85,
         width : 80,
-        textAlign: "center",
+        textAlign: "left",
         originX: position?"left":"right",
         originY: "bottom",
         fill: mode?"#ffffff":"#000000",
@@ -264,6 +264,8 @@ function drawCover(id, value) {
             alignCover();
             break;
         case 'publisher':
+            value = value.replace(/\s/gi, '');
+            value = value.substr(0,2) + "\n" + value.substr(2,2);
             cPublisher.setText(value);
             break;
         case 'oAuthor' :
