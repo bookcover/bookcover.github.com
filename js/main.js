@@ -139,7 +139,8 @@ $('#dLButton').bind('click', function(){
     //this.href = data;
     //this.download = $("title").val() + ".png";
     //window.open(data, "toDataURL() image", "width=" +canvas.getWidth()*scaleMultiplier +"," + "height=" +canvas.getHeight()*scaleMultiplier);
-    downloadCanvas(this, data, $("title").val() + ".png");
+    var filename = $("title").val() + ".png";
+    downloadCanvas(this, data, filename);
     
     //$("#canvas").hide();
 });
