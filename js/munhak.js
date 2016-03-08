@@ -112,8 +112,8 @@ function init() {
         fontWeight: '600',
         fill: 'black',
         OriginX: 'left',
-        stroke: 'white',
-        strokeWidth: 0.1
+        //stroke: 'white',
+        //strokeWidth: 0.1
     });
     canvas.add(cSeries);
 
