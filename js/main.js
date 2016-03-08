@@ -140,8 +140,9 @@ $('#dLButton').bind('click', function(){
     //this.download = $("title").val() + ".png";
     //window.open(data, "toDataURL() image", "width=" +canvas.getWidth()*scaleMultiplier +"," + "height=" +canvas.getHeight()*scaleMultiplier);
     var filename = $("#title").val() + ".png";
-    console.log(filename);
+
     downloadCanvas(this, data, filename);
+    console.log(filename);
     
     //$("#canvas").hide();
 });
