@@ -113,7 +113,7 @@ function init() {
         fill: 'black',
         OriginX: 'left',
         stroke: 'white',
-        strokeWidth: 0.3
+        strokeWidth: 0.1
     });
     canvas.add(cSeries);
 
