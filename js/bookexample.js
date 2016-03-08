@@ -11,8 +11,8 @@ var books = new Array(
             "title": "제로의 사역마",
             "labelColor": "",
             "originalTitle": "ゼロの使い魔",
-            "author": "ヤマグチノボル",
-            "oAuthor": "",
+            "author": "야마구치 노보루",
+            "oAuthor": "ヤマグチノボル",
             "translator": "윤영의"
         },
         {
