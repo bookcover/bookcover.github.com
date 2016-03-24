@@ -142,6 +142,7 @@ function switchOutput()
 {
     if(isMobile())
     {
+        console.log("모바일 브라우져");
         $('#canvasArea').css("display","none");
         $('#iCanvas').css("display","block");
         imgOutput();
@@ -152,6 +153,12 @@ function switchOutput()
         $('#canvasArea').css("display","none");
         $('#iCanvas').css("display","block");
         imgOutput();
+    }
+    else
+    {
+        console.log("어느것도 아니다");
+        $('#canvasArea').css("display","block");
+        $('#iCanvas').css("display","none");
     }
 }
 
