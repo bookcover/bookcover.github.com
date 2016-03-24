@@ -328,7 +328,21 @@ $("#colorPicker").spectrum({
 
     },
     hide: function () {
-
+        hexColor = color.toHexString();
+        console.log(hexColor);
+        $("#labalColor").css("background-color", color.toHexString()).val(color.toHexString());
+        cLabelU.setFill(color.toHexString());
+        cLabelD.setFill(color.toHexString());
+        var hsv = color.toHsv();
+        console.log(hsv);
+        if ((hsv.s <= 0.4 && hsv.v > 0.9))
+            cOriginalTitle.setFill("black");
+        else if (hsv.h > 50 && hsv.h <= 180 && hsv.s == 1 && hsv.v == 1)
+            cOriginalTitle.setFill("black");
+        else
+            cOriginalTitle.setFill("white");
+        canvas.renderAll();
+        imgOutput();
     },
     change: function (color) {
         hexColor = color.toHexString();
@@ -345,6 +359,8 @@ $("#colorPicker").spectrum({
         else
             cOriginalTitle.setFill("white");
         canvas.renderAll();
+        imgOutput();
+
 
     },
     palette: [

@@ -180,6 +180,8 @@ function init() {
     
     //상대위치로 위치가 결정되는 요소의 위치를 조정해줌.
     alignCover();
+    
+    //switchOutput();
 }
 
 init();
@@ -368,8 +370,7 @@ setTimeout(function () {
     }
     //init();
     canvas.renderAll();
-    //imgOutput();
-
+    switchOutput();
 }, 1000);
 
 //이미지 로딩이 늦어서 타이밍이 맞지 않는 부분이 있어 캔버스에 오브젝트가 다 로딩됐는지 확인하고 캔버스 사이즈 조정
@@ -381,6 +382,9 @@ canvasSet = setInterval(function() {
         cPublisher.setText(value);
         alignCover();
         GetCanvasAtResoution(500, canvas);
+        switchOutput();
+        clearInterval(this);
+        console.log('중지');
     }
  }, 100);
  
