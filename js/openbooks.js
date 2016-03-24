@@ -338,12 +338,14 @@ $("#colorPicker").spectrum({
         $("#labalColor").css("background-color", color.toHexString()).val(color.toHexString());
         cOriginalTitle.setFill(color.toHexString());
         canvas.renderAll();
+        imgOutput();
     },
     change: function (color) {
         hexColor = color.toHexString();
         $("#labalColor").css("background-color", color.toHexString()).val(color.toHexString());
         cOriginalTitle.setFill(color.toHexString());
         canvas.renderAll();
+        imgOutput();
     },
     palette: [
         ["#ffffff", "#fff7de", "#ffffce", "#ffffbd", "#ffffd6", "#b5ff84", "#c6efde", "#efffff", "#efe7f7", "#dea5d6"],

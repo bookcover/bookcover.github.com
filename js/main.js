@@ -172,7 +172,8 @@ $('#dLButton').bind('click', function(){
     if(uAgent.indexOf("trident") != -1 || uAgent.indexOf("edge") != -1)
     {
         alert("MS브라우져에서는 직접 다운로드를 지원하지 않습니다.\n\표지에 마우스 오른쪽 버튼을 눌러 \n\'다른 이름으로 이미지 저장'을 사용하세요.")
-    }else
+    }
+    else
     {
         var data;
         if(GetCanvasAtResoution(1600, canvas))
@@ -190,7 +191,7 @@ $('#dLButton').bind('click', function(){
         //this.href = data;
         //this.download = $("title").val() + ".png";
         //window.open(data, "toDataURL() image", "width=" +canvas.getWidth()*scaleMultiplier +"," + "height=" +canvas.getHeight()*scaleMultiplier);
-        var filename = $("#title").val() + ".jpg";
+        var filename = $("#title").val() + "_"+$("#publisher").val()+".jpg";
 
         downloadCanvas(this, data, filename);
         console.log(filename);
