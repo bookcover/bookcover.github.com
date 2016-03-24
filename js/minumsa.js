@@ -149,10 +149,9 @@ init();
 //크롬 브라우저에서 웹폰트가 바로 적용되지 않는 문제가 있어 그것을 갱신해주는 코드
 setTimeout(function () {
     canvas.renderAll();
-    var agent = navigator.userAgent.toLowerCase();
     //크롬에서 제대로 렌더링이 안돼는 문제가 있어서 크롬 판정 코드 삽입.
     //엣지브라우저가 크롬 에이전트를 가져다 쓰므로 엣지 판정 코드도 삽입
-    if ((agent.indexOf("applewebkit") != -1) && (agent.indexOf("edge") == -1)) {
+    if ((uAgent.indexOf("applewebkit") != -1) && (uAgent.indexOf("edge") == -1)) {
         cSeries.setText(cSeries.text);
         cTitle.setText(cTitle.text);
         cAuthor.setText(cAuthor.text);
@@ -264,6 +263,12 @@ $("#bcForm :text").bind('keyup',
             imgOutput();
         }
 );
+
+$(window).resize(function(){
+    imgOutput();
+    console.log("리사이즈");
+});
+
 $(document).ready(function () {
     function readURL(input) {
         if (input.files && input.files[0]) {

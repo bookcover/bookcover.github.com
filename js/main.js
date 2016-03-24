@@ -9,6 +9,9 @@ $("#maker li" ).each(function(){
     }
 });
 
+//현재 브라우져 정보
+var uAgent = navigator.userAgent.toLowerCase();
+
 book=books[Math.floor(Math.random()*books.length)];
 console.log(book);
 
