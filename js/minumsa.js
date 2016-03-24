@@ -142,6 +142,8 @@ function init() {
     
     //상대위치로 위치가 결정되는 요소의 위치를 조정해줌.
     alignCover();
+    
+    switchOutput();    
 }
 
 init();
@@ -260,14 +262,11 @@ $("#bcForm :text").bind('keyup',
         function () {
             drawCover(this.id, this.value);
             canvas.renderAll();
-            //imgOutput();
+            imgOutput();
         }
 );
 
-$(window).resize(function(){
-    imgOutput();
-    console.log("리사이즈");
-});
+
 
 $(document).ready(function () {
     function readURL(input) {

@@ -137,6 +137,30 @@ function GetCanvasAtResoution(newWidth, canvas)
 }
 
 
+//모바일이나 MS브라우져에서는 canvas를 제대로 지원하지 않기 때문에 img로 변환해서 출력함.
+function switchOutput()
+{
+    if(isMobile())
+    {
+        $('#canvasArea').css("display","none");
+        $('#iCanvas').css("display","block");
+        imgOutput();
+    }
+    else if(uAgent.indexOf("trident") != -1 || uAgent.indexOf("edge") != -1)
+    {
+        console.log("MS브라우져");
+        $('#canvasArea').css("display","none");
+        $('#iCanvas').css("display","block");
+        imgOutput();
+    }
+}
+
+$(window).resize(function(){
+    imgOutput();
+    console.log("리사이즈");
+});
+
+
 $('#dLButton').bind('click', function(){
     if(uAgent.indexOf("trident") != -1 || uAgent.indexOf("edge") != -1)
     {

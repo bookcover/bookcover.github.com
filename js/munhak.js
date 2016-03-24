@@ -212,20 +212,7 @@ function init() {
     alignCover();
     titleAlign(cTitle.text);
     GetCanvasAtResoution(defaultCanvasWidth, canvas);
-    if(isMobile())
-    {
-        $('#canvasArea').css("display","none");
-        $('#iCanvas').css("display","block");
-        imgOutput();
-    }
-    else if(uAgent.indexOf("trident") != -1 || uAgent.indexOf("edge") != -1)
-    {
-        console.log("MS브라우져");
-        $('#canvasArea').css("display","none");
-        $('#iCanvas').css("display","block");
-        imgOutput();
-        
-    }
+    switchOutput();
     console.log("테스트");
 }
 
@@ -500,19 +487,7 @@ setTimeout(function () {
     //init();
     canvas.renderAll();
     
-    if(isMobile())
-    {
-        $('#canvasArea').css("display","none");
-        $('#iCanvas').css("display","block");
-        imgOutput();
-    }
-    else if(uAgent.indexOf("trident") != -1 || uAgent.indexOf("edge") != -1)
-    {
-        console.log("MS브라우져");
-        $('#canvasArea').css("display","none");
-        $('#iCanvas').css("display","block");
-        imgOutput();
-    }
+    switchOutput();
     
     //imgOutput();
 }, 1000);
