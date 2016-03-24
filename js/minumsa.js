@@ -260,7 +260,7 @@ $("#bcForm :text").bind('keyup',
         function () {
             drawCover(this.id, this.value);
             canvas.renderAll();
-            imgOutput();
+            //imgOutput();
         }
 );
 
@@ -295,6 +295,7 @@ $(document).ready(function () {
                     cCoverArt.sendToBack();
                     cCoverLine.sendToBack();
                     canvas.renderAll();
+                    imgOutput();
                 }
             }
             reader.readAsDataURL(input.files[0]);

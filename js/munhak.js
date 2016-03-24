@@ -212,7 +212,21 @@ function init() {
     alignCover();
     titleAlign(cTitle.text);
     GetCanvasAtResoution(defaultCanvasWidth, canvas);
-
+    if(isMobile())
+    {
+        $('#canvasArea').css("display","none");
+        $('#iCanvas').css("display","block");
+        imgOutput();
+    }
+    else if(uAgent.indexOf("trident") != -1 || uAgent.indexOf("edge") != -1)
+    {
+        console.log("MS브라우져");
+        $('#canvasArea').css("display","none");
+        $('#iCanvas').css("display","block");
+        imgOutput();
+        
+    }
+    console.log("테스트");
 }
 
 init();
@@ -313,6 +327,7 @@ $("#bcForm :input").bind('keyup',
             drawCover(this.id, this.value);
             GetCanvasAtResoution(500, canvas);
             canvas.renderAll();
+            imgOutput();
         }
 );
 
@@ -365,6 +380,7 @@ $("#tSizeUp,#tSizeDown").bind('click',function(){
                     cCoverArt.sendToBack();
                     cCoverLine.sendToBack();
                     canvas.renderAll();
+                    imgOutput();
                 }
             }
             reader.readAsDataURL(input.files[0]);
@@ -377,6 +393,7 @@ $("#tSizeUp,#tSizeDown").bind('click',function(){
         if(GetCanvasAtResoution(1000, canvas))
         {
             readURL(this);
+            console.log("크기 변화됨");
         } 
         canvasSet = setInterval(function() {
             if(canvas.getObjects().length ==11){
@@ -414,12 +431,14 @@ $("#colorPicker").spectrum({
         cAuthor.setFill(color.toHexString());
         cTranslator.setFill(color.toHexString());
         canvas.renderAll();
+        imgOutput();
     },
     change: function (color) {
         cSeriesBox.setFill(color.toHexString());
         cAuthor.setFill(color.toHexString());
         cTranslator.setFill(color.toHexString());
         canvas.renderAll();
+        imgOutput();
     },
     palette: [
         ["#ffffff", "#fff7de", "#ffffce", "#ffffbd", "#ffffd6", "#b5ff84", "#c6efde", "#efffff", "#efe7f7", "#dea5d6"],
@@ -455,11 +474,13 @@ $("#seriesColor").spectrum({
         console.log("숨김");
         cSeries.setFill(color.toHexString());
         canvas.renderAll();
+        imgOutput();
     },
     change: function (color) {
         console.log("바뀜");
         cSeries.setFill(color.toHexString());
         canvas.renderAll();
+        imgOutput();
     },
     palette: [
         ["#ffffff", "#000000"]
@@ -478,5 +499,20 @@ setTimeout(function () {
     }
     //init();
     canvas.renderAll();
+    
+    if(isMobile())
+    {
+        $('#canvasArea').css("display","none");
+        $('#iCanvas').css("display","block");
+        imgOutput();
+    }
+    else if(uAgent.indexOf("trident") != -1 || uAgent.indexOf("edge") != -1)
+    {
+        console.log("MS브라우져");
+        $('#canvasArea').css("display","none");
+        $('#iCanvas').css("display","block");
+        imgOutput();
+    }
+    
     //imgOutput();
 }, 1000);
