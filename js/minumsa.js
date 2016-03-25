@@ -258,6 +258,7 @@ function alignCover() {
 }
 
 var timerStarted = false;
+var timer;
 //폼에 이벤트를 걸어줌
 $("#bcForm :text").bind('keyup',
         function () {
@@ -274,7 +275,7 @@ $("#bcForm :text").bind('keyup',
             }
             else
             {
-                clearTimeout(timer)
+                clearTimeout(timer);
                 timer = setTimeout(function() {
                     console.log("타이머 갱신");
                     imgOutput();

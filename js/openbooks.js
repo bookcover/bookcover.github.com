@@ -289,6 +289,7 @@ function alignCover() {
 }
 
 var timerStarted = false;
+var timer;
 //폼에 이벤트를 걸어줌
 $("#bcForm :input").bind('keyup',
         function () {
