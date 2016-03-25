@@ -266,8 +266,17 @@ $("#bcForm :text").bind('keyup',
             
             if(timerStarted == false){
                 timerStarted = true;
-                setTimeout(function() {
+                timer = setTimeout(function() {
                     console.log("타이머 실행");
+                    imgOutput();
+                    timerStarted = false;
+                }, 1000);
+            }
+            else
+            {
+                clearTimeout(timer)
+                timer = setTimeout(function() {
+                    console.log("타이머 갱신");
                     imgOutput();
                     timerStarted = false;
                 }, 1000);

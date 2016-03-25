@@ -288,6 +288,7 @@ function alignCover() {
     cTranslator.setLeft(cAuthor.getLeft() +cAuthor.getBoundingRectWidth() + 20);
 }
 
+var timerStarted = false;
 //폼에 이벤트를 걸어줌
 $("#bcForm :input").bind('keyup',
         function () {
@@ -299,12 +300,21 @@ $("#bcForm :input").bind('keyup',
             canvas.renderAll();
             if(timerStarted == false){
                 timerStarted = true;
-                setTimeout(function() {
+                timer = setTimeout(function() {
                     console.log("타이머 실행");
                     imgOutput();
                     timerStarted = false;
-                }, 1000);            
-            }            
+                }, 1000);
+            }
+            else
+            {
+                clearTimeout(timer)
+                timer = setTimeout(function() {
+                    console.log("타이머 갱신");
+                    imgOutput();
+                    timerStarted = false;
+                }, 1000);
+            }
         }
 );
 
