@@ -314,7 +314,14 @@ $("#bcForm :input").bind('keyup',
             drawCover(this.id, this.value);
             GetCanvasAtResoution(500, canvas);
             canvas.renderAll();
-            imgOutput();
+            
+            if(timerStarted == false){
+                timerStarted = true;
+                setTimeout(function() {
+                    console.log("타이머 실행");
+                    imgOutput();
+                    timerStarted = false;
+                }, 1000);            
         }
 );
 

@@ -297,6 +297,14 @@ $("#bcForm :input").bind('keyup',
             }
             GetCanvasAtResoution(500, canvas);
             canvas.renderAll();
+            if(timerStarted == false){
+                timerStarted = true;
+                setTimeout(function() {
+                    console.log("타이머 실행");
+                    imgOutput();
+                    timerStarted = false;
+                }, 1000);            
+            }            
         }
 );
 

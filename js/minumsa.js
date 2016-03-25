@@ -257,12 +257,21 @@ function alignCover() {
     cOriginalTitle.setTop(cLabelD.top + cLabelD.height / 2 + 2);
 }
 
+var timerStarted = false;
 //폼에 이벤트를 걸어줌
 $("#bcForm :text").bind('keyup',
         function () {
             drawCover(this.id, this.value);
             canvas.renderAll();
-            imgOutput();
+            
+            if(timerStarted == false){
+                timerStarted = true;
+                setTimeout(function() {
+                    console.log("타이머 실행");
+                    imgOutput();
+                    timerStarted = false;
+                }, 1000);
+            }
         }
 );
 
