@@ -271,7 +271,7 @@ $("#bcForm :text").bind('keyup',
                     console.log("타이머 실행");
                     imgOutput();
                     timerStarted = false;
-                }, 1000);
+                }, 2000);
             }
             else
             {
@@ -280,7 +280,7 @@ $("#bcForm :text").bind('keyup',
                     console.log("타이머 갱신");
                     imgOutput();
                     timerStarted = false;
-                }, 1000);
+                }, 2000);
             }
         }
 );
