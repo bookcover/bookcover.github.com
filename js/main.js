@@ -83,7 +83,7 @@ var canvas = new fabric.Canvas('canvas', {
 });
 
 
-var sCover ="img/"+(Math.floor(Math.random() *20)+1) + ".jpg";
+var sCover ="img/"+(Math.floor(Math.random() *68)+1) + ".jpg";
 var sNumber = Math.floor(Math.random() *999)+1
 
 var dColor; 
