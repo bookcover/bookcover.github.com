@@ -82,7 +82,7 @@ var canvas = new fabric.Canvas('canvas', {
     allowTouchScrolling : true,
 });
 
-
+//표지 설정
 var sCover ="img/"+(Math.floor(Math.random() *68)+1) + ".jpg";
 var sNumber = Math.floor(Math.random() *999)+1
 

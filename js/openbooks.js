@@ -1,7 +1,12 @@
 document.getElementById("canvas").onresize = waveToAudience;
   function waveToAudience() {
     alert("Waving like I've never waved before!");
-  }
+}
+  
+//세로 표지를 살리기 위한 이미지 추가 설정  
+//표지 설정
+if((Math.floor(Math.random() *2)))
+    sCover ="img/"+(Math.floor(Math.random() *4)+1) + "o.jpg";
 
 //문학동네 표지를 만들어주는 스크립트//민음사 표지 제작 스크립트
 console.log("열린책들");
