@@ -277,7 +277,10 @@ function drawCover(id, value) {
             alignCover();
             break;
         case 'originalTitle':
-            cOriginalTitle.setText(value);
+            if(value == "")
+                cOriginalTitle.setText($('#oAuthor').val());
+            else
+                cOriginalTitle.setText($("#oAuthor").val() + " : " + $('#originalTitle').val());
             break;
         case 'author':
             cAuthor.setText(value);
