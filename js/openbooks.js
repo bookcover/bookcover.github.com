@@ -62,7 +62,16 @@ function init() {
 
     //커버이미지
     fabric.Image.fromURL(sCover, function (img) {
-        ratio = img.getHeight() / (canvas.getHeight() - coverImageTop);
+        var ratio
+        if(img.getWidth() > img.getHeight())
+        {
+            console.log("가로가 세로보다 큼")
+            ratio = img.getHeight() / (canvas.getHeight() - coverImageTop);
+        }
+        else{
+            ratio = img.getWidth() / (canvas.getWidth());
+        }
+        //ratio = img.getHeight() / (canvas.getHeight() - coverImageTop);
         console.log("비율 : " + ratio);
         cCoverArt = img.set({
             left: -2,
@@ -456,6 +465,7 @@ canvasSet = setInterval(function() {
                     cCoverArt.sendToBack();
                     cCoverLine.sendToBack();
                     canvas.renderAll();
+                    imgOutput();
                 }
             }
             reader.readAsDataURL(input.files[0]);
