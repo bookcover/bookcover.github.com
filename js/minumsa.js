@@ -37,14 +37,43 @@ function init() {
 
     //커버이미지
     fabric.Image.fromURL(sCover, function (img) {
-        ratio = img.getWidth() / canvas.getWidth();
+        var ratio;
+        //이미지 방향
+        var orientation;        
+        if(img.getWidth() > img.getHeight())
+        {
+            console.log("가로가 세로보다 큼");
+            ratio = img.getHeight() / 356;
+            orientation = false;
+
+        }
+        else{
+            ratio = img.getWidth() / (canvas.getWidth());
+            orientation = true;
+        }
+        //ratio = img.getWidth() / canvas.getWidth();
+        console.log("민음사 : " +ratio);
         console.log(img.getWidth());
         cCoverArt = img.set({
             left: -1,
             top: -1,
-            height: 355 + 1,
-            width: (ratio > 1) ? (img.getWidth() / ratio + 1) : (img.getWidth() * ratio + 1),
+            //height: 355 + 1,
+            //width: (ratio > 1) ? (img.getWidth() / ratio + 1) : (img.getWidth() * ratio + 1),
+            scaleX: img.scaleX / ratio,
+            scaleY: img.scaleY / ratio,
         });
+        if(orientation)
+        {
+            console.log("세로이미지 : " + (cCover.getWidth()-cCoverArt.getWidth())/2);
+            cCoverArt.setTop((356-cCoverArt.getHeight())/2);
+        }
+        else
+        {
+            console.log("가로이미지 : "+ (cCover.getWidth()-cCoverArt.getWidth())/2);
+            cCoverArt.setLeft((cCover.getWidth()-cCoverArt.getWidth())/2);
+        }
+        
+        
         console.log(cCoverArt.width);
         canvas.add(cCoverArt);
         cCoverArt.sendToBack();
@@ -300,15 +329,40 @@ $(document).ready(function () {
                 imgObj.onload = function () {
                     cCoverArt.remove();
                     cCoverArt = new fabric.Image(imgObj);
-                    ratio = cCoverArt.getWidth() / canvas.getWidth();
+                    var ratio
+                    //이미지 방향 확인
+                    var orientation;
+                    if(cCoverArt.getWidth() > cCoverArt.getHeight())
+                    {
+                        console.log("가로가 세로보다 큼")
+                        ratio = cCoverArt.getHeight() / 356;
+                        orientation = false;
+                    }
+                    else{
+                        ratio = cCoverArt.getWidth() / (canvas.getWidth());
+                        orientation = true;
+                    }
+                    //ratio = cCoverArt.getWidth() / canvas.getWidth();
                     //cCoverArt.setSourcePath(image);
                     cCoverArt.set({
                         left: -1,
                         top: -1,
-                        height: 355 + 1,
-                        width: 356 / cCoverArt.getHeight() * cCoverArt.getWidth() + 1,
+                        scaleX: cCoverArt.scaleX / ratio,
+                        scaleY: cCoverArt.scaleY / ratio,
+                        //height: 355 + 1,
+                        //width: 356 / cCoverArt.getHeight() * cCoverArt.getWidth() + 1,
                         //width : (ratio >1)?(cCoverArt.getWidth()/ratio+1):(cCoverArt.getWidth()*ratio+1),
                     });
+                    if(orientation)
+                    {
+                        console.log("세로이미지 : " + (cCover.getWidth()-cCoverArt.getWidth())/2);
+                        cCoverArt.setTop((356-cCoverArt.getHeight())/2);
+                    }
+                    else
+                    {
+                        console.log("가로이미지 : "+ (cCover.getWidth()-cCoverArt.getWidth())/2);
+                        cCoverArt.setLeft((cCover.getWidth()-cCoverArt.getWidth())/2);
+                    }
                     canvas.add(cCoverArt);
                     cCoverArt.sendToBack();
                     cCoverLine.sendToBack();
