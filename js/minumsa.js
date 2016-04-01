@@ -43,9 +43,9 @@ function init() {
         if(img.getWidth() > img.getHeight())
         {
             console.log("가로가 세로보다 큼");
-            ratio = img.getHeight() / 356;
+            ratio = img.getWidth() / (canvas.getWidth());
+            //ratio = img.getHeight() / 356;
             orientation = false;
-
         }
         else{
             ratio = img.getWidth() / (canvas.getWidth());
@@ -69,7 +69,14 @@ function init() {
         }
         else
         {
-            console.log("가로이미지 : "+ (cCover.getWidth()-cCoverArt.getWidth())/2);
+            var scale;
+            if(356 > cCoverArt.getHeight())
+            {
+                scale = 356/cCoverArt.getHeight();
+                cCoverArt.setScaleX(cCoverArt.scaleX * scale);
+                cCoverArt.setScaleY(cCoverArt.scaleY * scale);
+            }
+            console.log("가로이미지 : "+ (cCover.getWidth()-cCoverArt.getWidth())/2 + "," + scale);
             cCoverArt.setLeft((cCover.getWidth()-cCoverArt.getWidth())/2);
         }
         
@@ -334,8 +341,8 @@ $(document).ready(function () {
                     var orientation;
                     if(cCoverArt.getWidth() > cCoverArt.getHeight())
                     {
-                        console.log("가로가 세로보다 큼")
-                        ratio = cCoverArt.getHeight() / 356;
+                        console.log("가로가 세로보다 큼");
+                        ratio = cCoverArt.getWidth() / (canvas.getWidth());
                         orientation = false;
                     }
                     else{
@@ -360,7 +367,14 @@ $(document).ready(function () {
                     }
                     else
                     {
-                        console.log("가로이미지 : "+ (cCover.getWidth()-cCoverArt.getWidth())/2);
+                        var scale;
+                        if(356 > cCoverArt.getHeight())
+                        {
+                            scale = 356/cCoverArt.getHeight();
+                            cCoverArt.setScaleX(cCoverArt.scaleX * scale);
+                            cCoverArt.setScaleY(cCoverArt.scaleY * scale);
+                        }
+                        console.log("가로이미지 : "+ (cCover.getWidth()-cCoverArt.getWidth())/2 + "," + scale);
                         cCoverArt.setLeft((cCover.getWidth()-cCoverArt.getWidth())/2);
                     }
                     canvas.add(cCoverArt);
